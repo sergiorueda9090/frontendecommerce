@@ -4,6 +4,7 @@ export const Categories = createSlice({
   name: 'Categories',
   initialState: {
     dataCategories: [],
+    dataOptions:[],
     dataCategory: {
         "status": true,
         "message": "",
@@ -52,10 +53,12 @@ export const Categories = createSlice({
     setDataCategory:(state, action) => {
         state.dataCategory.data           = action.payload.dataCategory;
         state.dataCategory.data.keywords  = action.payload.dataCategory.keywords.split(',');
-       
+    },
+    setDataOptions:(state, action) => {
+      state.dataOptions = action.payload;
     }
   }
 })
 
 // Action creators are generated for each case reducer function
-export const { setClearCategory, setDataCategories, setDataCategory } = Categories.actions;
+export const { setClearCategory, setDataCategories, setDataCategory, setDataOptions } = Categories.actions;

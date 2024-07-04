@@ -29,7 +29,7 @@ export function SideBar({ drawerWidth = 240 }) {
       <Divider />
 
       <List>
-        {['Users', 'Categories', 'Send email', 'Drafts'].map((text, index) => (
+        {['Users', 'Categories', 'Subcategories', 'Drafts'].map((text, index) => (
           <ListItem key={text} disablePadding>
             <ListItemButton>
               <ListItemIcon>

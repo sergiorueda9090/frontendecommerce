@@ -1,6 +1,6 @@
 import axios from "axios";
 import toast from 'react-hot-toast';
-import { setDataCategories, setDataCategory, setClearCategory, setDataOptions } from "./Categories.js";
+import { setDataSubCategories, setDataSubCategory, setClearData } from "./SubCategories.js";
 import { showBackDropStore, hideBackDropStore } from '../sharedStore/shared.js';
 import { URL }      from "../../api/authApi.js";
 import constants    from "../../constants/constants.js";
@@ -8,7 +8,7 @@ import constants    from "../../constants/constants.js";
 const token = constants.token;
 
 // Función asincrónica para obtener los Users
-export const getCategories = () => {
+export const getAll = () => {
 
     return async (dispatch, getState) => {
         
@@ -17,7 +17,7 @@ export const getCategories = () => {
         // Iniciar la carga
         const options = {
             method: 'GET',
-            url: `${ URL}/api/listAllCategories`,
+            url: `${ URL}/api/listAllSubCategories`,
             headers: {
               Authorization: `Token ${token}`
             }
@@ -27,8 +27,9 @@ export const getCategories = () => {
         try {
             // Hacer la solicitud
             const response = await axios.request(options);
+            
             // Despachar la acción setAuthenticated con la respuesta de la solicitud
-            await dispatch(setDataCategories({ dataCategories: response.data.data }));
+            await dispatch(setDataSubCategories({ dataSubCategories: response.data.data, pager: response.data.pager }));
 
             await dispatch( hideBackDropStore() );
 
@@ -43,7 +44,7 @@ export const getCategories = () => {
     };
 };
 
-export const getCategory = (idUser = "") => {
+export const getSubCategory = (id = "") => {
 
     return async (dispatch, getState) => {
 
@@ -51,7 +52,7 @@ export const getCategory = (idUser = "") => {
 
         const options = {
             method: 'GET',
-            url: `${ URL}/api/showCategory/${idUser}`,
+            url: `${ URL}/api/showSubCategories/${id}`,
             headers: {
               Authorization: `Token ${token}`
             }
@@ -60,10 +61,9 @@ export const getCategory = (idUser = "") => {
           try {
             // Hacer la solicitud
             const response = await axios.request(options);
-            console.log("response ",response.data.data[0]);
-            // Despachar la acción setAuthenticated con la respuesta de la solicitud
 
-            await dispatch(setDataCategory({ dataCategory:  response.data.data[0] }));
+            // Despachar la acción setAuthenticated con la respuesta de la solicitud
+            await dispatch(setDataSubCategory({ dataCategory:  response.data.data[0] }));
             
             await dispatch( hideBackDropStore() );
 
@@ -79,7 +79,7 @@ export const getCategory = (idUser = "") => {
 
 }
 
-export const editCategory = (categoryData = "") => {
+export const editSubCategory = (data = "") => {
 
     return async (dispatch, getState) => {
 
@@ -87,12 +87,12 @@ export const editCategory = (categoryData = "") => {
         
         const options = {
             method: 'POST',
-            url: `${ URL}/api/updateCategory/${categoryData.id}`,
+            url: `${ URL}/api/updateSubCategory/${data.id}`,
             headers: {
               Authorization: `Token ${token}`,
               'content-type': 'multipart/form-data; boundary=---011000010111000001101001'
             },
-            data:categoryData
+            data:data
           };
 
           try {
@@ -101,9 +101,9 @@ export const editCategory = (categoryData = "") => {
  
             if(response.data.status){
                 await dispatch( hideBackDropStore() );
-                await dispatch( setClearCategory() );
-                await dispatch( getCategories() );
-                toast.success('Successfully created!');
+                await dispatch( setClearData() );
+                await dispatch( getAll() );
+                toast.success('Successfully Update!');
             }else{
                 toast.error('This is an error!');;
             }
@@ -121,15 +121,14 @@ export const editCategory = (categoryData = "") => {
 
 }
 
-export const createCategory =  (categoryData) => {
+export const createSubCategory =  (categoryData) => {
 
     return async (dispatch, getState) => {
 
         await dispatch(showBackDropStore());
-
         const options = {
             method: 'POST',
-            url: `${ URL}/api/createCategory`,
+            url: `${ URL}/api/createSubCategory`,
             headers: {
                 Authorization: `Token ${token}`,
                 'content-type': 'multipart/form-data; boundary=---011000010111000001101001'
@@ -143,12 +142,12 @@ export const createCategory =  (categoryData) => {
  
             if(response.data.status){
                 await dispatch( hideBackDropStore() );
-                await dispatch( setClearCategory() );
-                await dispatch( getCategories() );
+                await dispatch( setClearData() );
+                await dispatch( getAll() );
                 toast.success('Successfully created!');
             }else{
                 await dispatch( hideBackDropStore() );
-                await dispatch( getCategories() );
+                await dispatch( getAll() );
                 toast.error(`${response.data.message} ${response.data.data}`);
             }
             
@@ -166,7 +165,51 @@ export const createCategory =  (categoryData) => {
 }
 
 
-export const getDelete = (idCategory = "") => {
+export const createMany =  (data) => {
+
+    return async (dispatch, getState) => {
+
+        await dispatch(showBackDropStore());
+        
+        const options = {
+            method: 'POST',
+            url: `${ URL}/api/createManySubCategory`,
+            headers: {
+                Authorization: `Token ${token}`,
+                'content-type': 'multipart/form-data; boundary=---011000010111000001101001'
+              },
+            data:{ data }
+        }
+
+        try {
+            // Hacer la solicitud
+            const response = await axios.request(options);
+ 
+            if(response.data.status){
+                await dispatch( hideBackDropStore() );
+                await dispatch( setClearData() );
+                await dispatch( getAll() );
+                toast.success('Successfully created!');
+            }else{
+                await dispatch( hideBackDropStore() );
+                await dispatch( getAll() );
+                toast.error(`${response.data.message} ${response.data.data}`);
+            }
+            
+
+        } catch (error) {
+
+            await dispatch( hideBackDropStore() );
+            // Manejar errores
+            console.error(error);
+       
+        }
+
+    }
+
+}
+
+export const getDelete = (id = "") => {
 
     return async (dispatch, getState) => {
 
@@ -174,7 +217,7 @@ export const getDelete = (idCategory = "") => {
 
         const options = {
             method: 'DELETE',
-            url: `${ URL}/api/deleteCategory/${idCategory}`,
+            url: `${ URL}/api/deleteSubCategory/${id}`,
             headers: {
               Authorization: `Token ${token}`
             }
@@ -188,7 +231,7 @@ export const getDelete = (idCategory = "") => {
             
             // Despachar la acción setAuthenticated con la respuesta de la solicitud
             if(response.data.status){
-                await dispatch( getCategories() );
+                await dispatch( getAll() );
                 toast.success('Successfully Delete!');
             }else{
                 toast.error('This is an error!');;
@@ -204,38 +247,3 @@ export const getDelete = (idCategory = "") => {
     }
 
 }
-
-export const getDataOption = () => {
-
-    return async (dispatch, getState) => {
-        
-        await dispatch(showBackDropStore());
-
-        // Iniciar la carga
-        const options = {
-            method: 'GET',
-            url: `${ URL}/api/listAllOptionsCategories`,
-            headers: {
-                Authorization: `Token ${token}`
-            }
-            };
-            
-
-        try {
-            // Hacer la solicitud
-            const response = await axios.request(options);
-
-            await dispatch(setDataOptions(response.data.data));
-
-            await dispatch( hideBackDropStore() );
-
-        } catch (error) {
-            
-            // Manejar errores
-            console.error(error);
-            
-            await dispatch( hideBackDropStore() );
-
-        }
-    };
-};
