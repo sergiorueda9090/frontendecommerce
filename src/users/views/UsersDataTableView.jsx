@@ -103,6 +103,7 @@ export const UsersDataTableView = () => {
     <>
     
       <DataGrid
+        sx={{ width: 800, height: 750 }}
         rows={dataUsers}
         columns={columns}
         initialState={{

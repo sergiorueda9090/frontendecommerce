@@ -1,5 +1,5 @@
 const global = {
-    "token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6Im1hdXJpY2lvQGhvdG1haWwuY29tIiwiaWF0IjoxNzIwMDk5NjM2LCJleHAiOjE3MjAxMDMyMzZ9.DxF1hnxW9Adf3WWdRLCqUW4X-AOc40cBUNOnKz1LIRI",
+    "token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6Im1hdXJpY2lvQGhvdG1haWwuY29tIiwiaWF0IjoxNzIyMjg4MzcwLCJleHAiOjE3MjIzNzQ3NzB9.OmXXRoIjPp62hLhJRqL5LDGW49rOGSbbmynKYfUdCB0",
     "url": "http://ecommerce/public/"
 }
 

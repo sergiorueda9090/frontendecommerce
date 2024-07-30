@@ -4,6 +4,7 @@ export const SubCategories = createSlice({
   name: 'SubCategories',
   initialState: {
     dataSubCategories: [],
+    dataOptionsSub:[],
     pager:{"currentPage": 0,  "perPage"   : 0,
            "totalItems" : 0,  "totalPages": 0},
     dataSubCategory: {
@@ -51,9 +52,12 @@ export const SubCategories = createSlice({
         state.dataSubCategory.data           = action.payload.dataCategory;
         state.dataSubCategory.data.keywords  = action.payload.dataCategory.keywords.split(',');
        
+    },
+    setDataOptions:(state, action) => {
+      state.dataOptionsSub = action.payload;
     }
   }
 })
 
 // Action creators are generated for each case reducer function
-export const { setClearData, setDataSubCategories, setDataSubCategory } = SubCategories.actions;
+export const { setClearData, setDataSubCategories, setDataSubCategory, setDataOptions } = SubCategories.actions;

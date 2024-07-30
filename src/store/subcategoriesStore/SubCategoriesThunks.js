@@ -1,7 +1,7 @@
 import axios from "axios";
 import toast from 'react-hot-toast';
-import { setDataSubCategories, setDataSubCategory, setClearData } from "./SubCategories.js";
-import { showBackDropStore, hideBackDropStore } from '../sharedStore/shared.js';
+import { setDataSubCategories, setDataSubCategory, setClearData, setDataOptions } from "./SubCategories.js";
+import { showBackDropStore, hideBackDropStore, showLinearProgress, hideLinearProgress } from '../sharedStore/shared.js';
 import { URL }      from "../../api/authApi.js";
 import constants    from "../../constants/constants.js";
 
@@ -247,3 +247,39 @@ export const getDelete = (id = "") => {
     }
 
 }
+
+
+export const getDataOption = (id = "") => {
+    
+    return async (dispatch, getState) => {
+        
+        await dispatch(showLinearProgress());
+
+        // Iniciar la carga
+        const options = {
+            method: 'GET',
+            url: `${ URL}/api/listAllOptionsSubCategories/${id}`,
+            headers: {
+                Authorization: `Token ${token}`
+            }
+            };
+            
+
+        try {
+            // Hacer la solicitud
+            const response = await axios.request(options);
+
+            await dispatch(setDataOptions(response.data.data));
+
+            await dispatch( hideLinearProgress() );
+
+        } catch (error) {
+            
+            // Manejar errores
+            console.error(error);
+            
+            await dispatch( hideLinearProgress() );
+
+        }
+    };
+};

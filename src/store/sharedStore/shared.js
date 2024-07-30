@@ -5,6 +5,7 @@ export const Shared = createSlice({
   initialState: {
     openBackDropStore:false,
     openModalStore:false,
+    openLinearProgress:false
   },
   reducers: {
     showBackDropStore:(state) => {
@@ -18,9 +19,15 @@ export const Shared = createSlice({
     },
     closeModalShared:(state, action) => {
         state.openModalStore    = false;
+    },
+    showLinearProgress:(state, action) => {
+      state.openLinearProgress = true;
+    },
+    hideLinearProgress:(state, action) => {
+      state.openLinearProgress = false;
     }
   }
 })
 
 // Action creators are generated for each case reducer function
-export const { showBackDropStore, hideBackDropStore, openModalShared, closeModalShared } = Shared.actions;
+export const { showBackDropStore, hideBackDropStore, openModalShared, closeModalShared, showLinearProgress, hideLinearProgress } = Shared.actions;

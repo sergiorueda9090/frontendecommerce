@@ -97,7 +97,7 @@ export const DataTableView = () => {
     <>
     
        <DataGrid
-        sx={{ minWidth: 800 }}
+        sx={{ width: 800, height: 750 }}
         rows={dataSubCategories}
         columns={columns}
         pagination

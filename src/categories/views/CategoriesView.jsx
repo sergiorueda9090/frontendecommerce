@@ -17,7 +17,7 @@ export const CategoriesView = () => {
         </Grid>
 
         <Grid item>
-            <Button color="primary" sx={{ padding:2 }} onClick={ (e) => dispatch(openModalShared()) }>
+            <Button color="primary" variant="outlined" onClick={ (e) => dispatch(openModalShared()) }>
                 <PersonAddAltIcon sx={{ fontSize:30, mr:1 }}/>
                  Crear Category
             </Button>

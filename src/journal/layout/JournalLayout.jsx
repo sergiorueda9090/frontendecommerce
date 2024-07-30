@@ -1,32 +1,38 @@
-
-import { Box, Toolbar } from "@mui/material"
+import {useState} from 'react';
+import { Box, CssBaseline, Toolbar } from '@mui/material';
+import { useTheme } from '@mui/material/styles';
 import { NavBar } from "../../components/NavBar";
 import { SideBar } from "../../components/SideBar";
 
-const drawerWhidth = 240;
-const nameModule   = "Journal";
+const nameModule = "Layout";
 
-export const JournalLayout = ( { children } ) => {
+export const JournalLayout = ({ children }) => {
+
+  const theme = useTheme();
+  
+  const [open, setOpen] = useState(false);
+
+  const handleDrawerOpen = () => {
+    setOpen(true);
+  };
+
+  const handleDrawerClose = () => {
+    setOpen(false);
+  };
 
   return (
-        <Box sx={{ display: 'flex' }}>
+    <Box sx={{ display: 'flex' }}>
+      <CssBaseline />
+      <NavBar open={open} handleDrawerOpen={handleDrawerOpen} nameModule={nameModule}/>
+      <SideBar open={open} handleDrawerClose={handleDrawerClose} />
+      <Box
+        component='main'
+        sx={{ flexGrow: 1, p: 3 }}
+      >
+        <Toolbar />
+        {children}
+      </Box>
+    </Box>
+  );
+};
 
-            {/**NAVBAR */}
-            <NavBar drawerWhidth={drawerWhidth} nameModule={nameModule}/>
-            
-            {/**SideBar */}     
-            <SideBar drawerWhidth={drawerWhidth}/>  
-
-            <Box
-                component='main'
-                sx={{ flexGrow:1, p:2 }}
-            >
-            
-            <Toolbar/>
-            
-            { children }
-
-            </Box>
-        </Box>
-    )
-}

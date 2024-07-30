@@ -96,7 +96,7 @@ export const CategoriesDataTableView = () => {
     <>
     
       <DataGrid
-        sx={{ minWidth: 800 }}
+        sx={{ width: 800, height: 750 }}
         rows={dataCategories}
         columns={columns}
         initialState={{

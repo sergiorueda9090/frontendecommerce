@@ -1,31 +1,64 @@
 import React, { useEffect, useState } from 'react';
 import { Button, Card, CardHeader, Skeleton } from '@mui/material';
 import { useSelector } from 'react-redux';
+import Resizer from 'react-image-file-resizer';
 
 const ImageUpload = ({ onImageUpdate, image=""}) => {
      
     const { openModalStore }  = useSelector( state => state.shared );
 
     const [preview,       setPreview]      = useState("");
-    const [previewImage,  setPreviewImage] = useState("")
-  
-    const handleImageChange = (event) => {
+    const [previewImage,  setPreviewImage] = useState("");
+    const [error, setError]                = useState("");
+
+
+    const validateImageDimensions = (file) => {
+      return new Promise((resolve, reject) => {
+          Resizer.imageFileResizer(
+              file,
+              263,
+              629,
+              'JPEG, PNG, JPG',
+              100,
+              0,
+              (uri) => {
+                  const img = new Image();
+                  img.src = uri;
+                  img.onload = () => {
+                      if (img.width === 263 && img.height === 629) {
+                          resolve(true);
+                      } else {
+                          reject('Image dimensions must be 263x629 pixels');
+                      }
+                  };
+              },
+              'base64'
+          );
+      });
+  };
+
+    const handleImageChange = async (event) => {
       
       const file = event.target.files[0];
       
       if (file) {
+          try {
+              await validateImageDimensions(file);
+              const reader = new FileReader();
 
-        const reader = new FileReader();
+              reader.onloadend = () => {
+                  setPreview(reader.result);
+                  onImageUpdate(file);  // Pass image data to parent
+              };
 
-        reader.onloadend = () => {
-          setPreview(reader.result);
-          onImageUpdate(file);  // Pass image data to parent
-        };
-
-        reader.readAsDataURL(file);
-        
-        setPreviewImage("");
-
+              reader.readAsDataURL(file);
+              setPreviewImage("");
+              setError("");
+          } catch (err) {
+              setError(err);
+              setPreview("");
+              onImageUpdate(null); // Reset the image data in the parent
+          }
       }
       
     };
@@ -47,23 +80,19 @@ const ImageUpload = ({ onImageUpdate, image=""}) => {
 
       if(previewImage == ""){
 
-        if(preview == ""){
-
-          return <>
-                  <Card sx={{ maxWidth: 345 }}>
-                          <CardHeader />
-                          <Skeleton sx={{ height: 190 }} animation="wave" variant="rectangular" />
-                  </Card>
-          </>
-
-        }else{
-
-          return <>
-               <div>
-                  <img src={preview} alt="Preview" style={{ width: '100%', maxHeight: '300px', marginTop: '20px' }} />
-                </div>
-          </>          
-
+        if (preview === "") {
+          return (
+            <Card sx={{ maxWidth: 263 }}>
+              <CardHeader />
+              <Skeleton sx={{ width: 263, height: 629 }} animation="wave" variant="rectangular" />
+            </Card>
+          );
+        } else {
+          return (
+            <div>
+              <img src={preview} alt="Preview" style={{ width: '263px', height: '629px', marginTop: '20px' }} />
+            </div>
+          );
         }
 
 
@@ -71,7 +100,7 @@ const ImageUpload = ({ onImageUpdate, image=""}) => {
 
         return <>
                 <div>
-                  <img src={previewImage} alt="Preview" style={{ width: '100%', maxHeight: '300px', marginTop: '20px' }} />
+                  <img src={previewImage} alt="Preview" style={{ width: '263px', height: '629px', marginTop: '20px' }} />
                 </div>
               </>  
 
@@ -93,7 +122,7 @@ const ImageUpload = ({ onImageUpdate, image=""}) => {
             Upload Image
           </Button>
         </label>
-
+         {error && <p style={{ color: 'red' }}>{error}</p>}
           {showImage()}
 
       </div>
