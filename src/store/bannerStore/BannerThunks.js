@@ -1,17 +1,20 @@
 import axios from "axios";
 import toast from 'react-hot-toast';
+import { loginFail } from "../authStore/Auth.js"; 
 import { setDataDataBanners, setDataBanner, setClearData } from "./Banner.js";
 import { showBackDropStore, hideBackDropStore } from '../sharedStore/shared.js';
 import { URL }      from "../../api/authApi.js";
-import constants    from "../../constants/constants.js";
 
-const token = constants.token;
 
 // Función asincrónica para obtener los Users
 export const getAll = () => {
 
     return async (dispatch, getState) => {
         
+        const {auth} = getState();
+
+        const token = auth.token
+
         await dispatch(showBackDropStore());
 
         // Iniciar la carga
@@ -37,7 +40,8 @@ export const getAll = () => {
          
             // Manejar errores
             console.error(error);
-            
+            await dispatch( loginFail() );
+
             await dispatch( hideBackDropStore() );
 
         }
@@ -47,6 +51,10 @@ export const getAll = () => {
 export const getBanner = (id = "") => {
 
     return async (dispatch, getState) => {
+        
+        const {auth} = getState();
+
+        const token = auth.token
 
         await dispatch(showBackDropStore());
 
@@ -68,6 +76,7 @@ export const getBanner = (id = "") => {
             await dispatch( hideBackDropStore() );
 
         } catch (error) {
+            await dispatch( loginFail() );
 
             await dispatch( hideBackDropStore() );
             // Manejar errores
@@ -82,6 +91,10 @@ export const getBanner = (id = "") => {
 export const editBanner = (data = "") => {
 
     return async (dispatch, getState) => {
+
+        const {auth} = getState();
+
+        const token = auth.token
 
         await dispatch(showBackDropStore());
         
@@ -110,6 +123,7 @@ export const editBanner = (data = "") => {
             
 
         } catch (error) {
+            await dispatch( loginFail() );
 
             await dispatch( hideBackDropStore() );
             // Manejar errores
@@ -124,6 +138,10 @@ export const editBanner = (data = "") => {
 export const creatBanner =  (categoryData) => {
 
     return async (dispatch, getState) => {
+
+        const {auth} = getState();
+
+        const token = auth.token
 
         await dispatch(showBackDropStore());
         const options = {
@@ -153,6 +171,7 @@ export const creatBanner =  (categoryData) => {
             
 
         } catch (error) {
+            await dispatch( loginFail() );
 
             await dispatch( hideBackDropStore() );
             // Manejar errores
@@ -167,6 +186,10 @@ export const creatBanner =  (categoryData) => {
 export const createMany =  (data) => {
 
     return async (dispatch, getState) => {
+
+        const {auth} = getState();
+
+        const token = auth.token
 
         await dispatch(showBackDropStore());
         
@@ -197,6 +220,7 @@ export const createMany =  (data) => {
             
 
         } catch (error) {
+            await dispatch( loginFail() );
 
             await dispatch( hideBackDropStore() );
             // Manejar errores
@@ -211,6 +235,10 @@ export const createMany =  (data) => {
 export const getDelete = (id = "") => {
 
     return async (dispatch, getState) => {
+
+        const {auth} = getState();
+
+        const token = auth.token
 
         await dispatch(showBackDropStore());
 
@@ -238,6 +266,8 @@ export const getDelete = (id = "") => {
             
 
         } catch (error) {
+            await dispatch( loginFail() );
+
             await dispatch( hideBackDropStore() );
             // Manejar errores
             console.error(error);

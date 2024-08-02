@@ -3,15 +3,19 @@ import toast from 'react-hot-toast';
 import { setDataSubCategories, setDataSubCategory, setClearData, setDataOptions } from "./SubCategories.js";
 import { showBackDropStore, hideBackDropStore, showLinearProgress, hideLinearProgress } from '../sharedStore/shared.js';
 import { URL }      from "../../api/authApi.js";
-import constants    from "../../constants/constants.js";
+import { loginFail } from "../authStore/Auth.js";
 
-const token = constants.token;
+
 
 // Función asincrónica para obtener los Users
 export const getAll = () => {
 
     return async (dispatch, getState) => {
-        
+
+        const {auth} = getState();
+
+        const token = auth.token
+
         await dispatch(showBackDropStore());
 
         // Iniciar la carga
@@ -37,7 +41,8 @@ export const getAll = () => {
          
             // Manejar errores
             console.error(error);
-            
+            await dispatch( loginFail() );
+
             await dispatch( hideBackDropStore() );
 
         }
@@ -47,6 +52,10 @@ export const getAll = () => {
 export const getSubCategory = (id = "") => {
 
     return async (dispatch, getState) => {
+
+        const {auth} = getState();
+
+        const token = auth.token
 
         await dispatch(showBackDropStore());
 
@@ -69,6 +78,8 @@ export const getSubCategory = (id = "") => {
 
         } catch (error) {
 
+            await dispatch( loginFail() );
+
             await dispatch( hideBackDropStore() );
             // Manejar errores
             console.error(error);
@@ -80,8 +91,12 @@ export const getSubCategory = (id = "") => {
 }
 
 export const editSubCategory = (data = "") => {
-
+    
     return async (dispatch, getState) => {
+
+        const {auth} = getState();
+
+        const token = auth.token
 
         await dispatch(showBackDropStore());
         
@@ -111,6 +126,8 @@ export const editSubCategory = (data = "") => {
 
         } catch (error) {
 
+            await dispatch( loginFail() );
+
             await dispatch( hideBackDropStore() );
             // Manejar errores
             console.error(error);
@@ -124,6 +141,10 @@ export const editSubCategory = (data = "") => {
 export const createSubCategory =  (categoryData) => {
 
     return async (dispatch, getState) => {
+
+        const {auth} = getState();
+
+        const token = auth.token
 
         await dispatch(showBackDropStore());
         const options = {
@@ -154,6 +175,8 @@ export const createSubCategory =  (categoryData) => {
 
         } catch (error) {
 
+            await dispatch( loginFail() );
+
             await dispatch( hideBackDropStore() );
             // Manejar errores
             console.error(error);
@@ -168,6 +191,10 @@ export const createSubCategory =  (categoryData) => {
 export const createMany =  (data) => {
 
     return async (dispatch, getState) => {
+
+        const {auth} = getState();
+
+        const token = auth.token
 
         await dispatch(showBackDropStore());
         
@@ -199,6 +226,8 @@ export const createMany =  (data) => {
 
         } catch (error) {
 
+            await dispatch( loginFail() );
+
             await dispatch( hideBackDropStore() );
             // Manejar errores
             console.error(error);
@@ -212,6 +241,10 @@ export const createMany =  (data) => {
 export const getDelete = (id = "") => {
 
     return async (dispatch, getState) => {
+
+        const {auth} = getState();
+
+        const token = auth.token
 
         await dispatch(showBackDropStore());
 
@@ -239,6 +272,9 @@ export const getDelete = (id = "") => {
             
 
         } catch (error) {
+
+            await dispatch( loginFail() );
+
             await dispatch( hideBackDropStore() );
             // Manejar errores
             console.error(error);
@@ -252,6 +288,10 @@ export const getDelete = (id = "") => {
 export const getDataOption = (id = "") => {
     
     return async (dispatch, getState) => {
+        
+        const {auth} = getState();
+
+        const token = auth.token
         
         await dispatch(showLinearProgress());
 
@@ -274,6 +314,8 @@ export const getDataOption = (id = "") => {
             await dispatch( hideLinearProgress() );
 
         } catch (error) {
+            
+            await dispatch( loginFail() );
             
             // Manejar errores
             console.error(error);

@@ -1,26 +1,37 @@
-import { Route, Routes } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { Route, Routes, Navigate  } from 'react-router-dom';
 import { AuthRoutes }    from  '../auth/routes/AuthRoutes';
 import { JournalRoute }  from '../journal/routes/JournalRoute';
-import { useSelector }   from 'react-redux';
+import { useSelector, useDispatch }   from 'react-redux';
+import { getLoginSuccess } from '../store/authStore/authThunks.js';
 
 export const AppRouter = () => {
 
-    const { infoUser } = useSelector( state => state.auth)
+    const { isLogin } = useSelector(state => state.auth);
+
+    const dispatch = useDispatch();
     
-    const pathRoutes = () => {
 
-        if(infoUser.access_token != ""){
-            return <Route path="/*"      element={ <JournalRoute/> }/>
-        }else{
-            return <Route path="/auth/*" element={ <AuthRoutes/> } />
+    useEffect(() => {
+
+        const callMyFunction = async () => {
+            await dispatch(getLoginSuccess());
         }
-    }
+        
+        callMyFunction();
 
-
+      }, [isLogin]);
+    
     return (
-        <Routes>
-            {pathRoutes()}
-        </Routes>
-    )
-
-}
+      <Routes>
+        {isLogin ? (
+          <Route path="/*" element={<JournalRoute />} />
+        ) : (
+          <>
+            <Route path="/auth/*" element={<AuthRoutes />} />
+            <Route path="*" element={<Navigate to="/auth" replace />} />
+          </>
+        )}
+      </Routes>
+    );
+  };

@@ -1,17 +1,20 @@
 import axios from "axios";
 import toast from 'react-hot-toast';
+import { loginFail } from "../authStore/Auth.js"; 
 import { setDataCategories, setDataCategory, setClearCategory, setDataOptions } from "./Categories.js";
 import { showBackDropStore, hideBackDropStore } from '../sharedStore/shared.js';
 import { URL }      from "../../api/authApi.js";
-import constants    from "../../constants/constants.js";
 
-const token = constants.token;
 
 // Función asincrónica para obtener los Users
 export const getCategories = () => {
 
     return async (dispatch, getState) => {
         
+        const {auth} = getState();
+
+        const token = auth.token
+
         await dispatch(showBackDropStore());
 
         // Iniciar la carga
@@ -36,7 +39,8 @@ export const getCategories = () => {
          
             // Manejar errores
             console.error(error);
-            
+            await dispatch( loginFail() );
+
             await dispatch( hideBackDropStore() );
 
         }
@@ -46,6 +50,10 @@ export const getCategories = () => {
 export const getCategory = (idUser = "") => {
 
     return async (dispatch, getState) => {
+
+        const {auth} = getState();
+
+        const token = auth.token
 
         await dispatch(showBackDropStore());
 
@@ -68,7 +76,7 @@ export const getCategory = (idUser = "") => {
             await dispatch( hideBackDropStore() );
 
         } catch (error) {
-
+            await dispatch( loginFail() );
             await dispatch( hideBackDropStore() );
             // Manejar errores
             console.error(error);
@@ -82,6 +90,10 @@ export const getCategory = (idUser = "") => {
 export const editCategory = (categoryData = "") => {
 
     return async (dispatch, getState) => {
+
+        const {auth} = getState();
+
+        const token = auth.token
 
         await dispatch(showBackDropStore());
         
@@ -110,7 +122,7 @@ export const editCategory = (categoryData = "") => {
             
 
         } catch (error) {
-
+            await dispatch( loginFail() );
             await dispatch( hideBackDropStore() );
             // Manejar errores
             console.error(error);
@@ -124,6 +136,10 @@ export const editCategory = (categoryData = "") => {
 export const createCategory =  (categoryData) => {
 
     return async (dispatch, getState) => {
+
+        const {auth} = getState();
+
+        const token = auth.token
 
         await dispatch(showBackDropStore());
 
@@ -154,7 +170,7 @@ export const createCategory =  (categoryData) => {
             
 
         } catch (error) {
-
+            await dispatch( loginFail() );
             await dispatch( hideBackDropStore() );
             // Manejar errores
             console.error(error);
@@ -169,6 +185,10 @@ export const createCategory =  (categoryData) => {
 export const getDelete = (idCategory = "") => {
 
     return async (dispatch, getState) => {
+
+        const {auth} = getState();
+
+        const token = auth.token
 
         await dispatch(showBackDropStore());
 
@@ -196,6 +216,7 @@ export const getDelete = (idCategory = "") => {
             
 
         } catch (error) {
+            await dispatch( loginFail() );
             await dispatch( hideBackDropStore() );
             // Manejar errores
             console.error(error);
@@ -209,6 +230,10 @@ export const getDataOption = () => {
 
     return async (dispatch, getState) => {
         
+        const {auth} = getState();
+
+        const token = auth.token
+
         await dispatch(showBackDropStore());
 
         // Iniciar la carga
@@ -233,7 +258,7 @@ export const getDataOption = () => {
             
             // Manejar errores
             console.error(error);
-            
+            await dispatch( loginFail() );
             await dispatch( hideBackDropStore() );
 
         }

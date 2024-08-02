@@ -2,16 +2,19 @@ import axios from "axios";
 import toast from 'react-hot-toast';
 import { setDataUsers,setDataUser } from "./Users.js";
 import { showBackDropStore, hideBackDropStore } from '../sharedStore/shared.js';
+import { loginFail } from "../authStore/Auth.js";
 import { URL } from "../../api/authApi.js";
-import constants from "../../constants/constants.js";
 
-const token = constants.token;
 
 // Función asincrónica para obtener los Users
 export const getUsers = () => {
 
     return async (dispatch, getState) => {
         
+        const {auth} = getState();
+
+        const token = auth.token
+
         await dispatch(showBackDropStore());
 
         // Iniciar la carga
@@ -36,7 +39,7 @@ export const getUsers = () => {
          
             // Manejar errores
             console.error(error);
-            
+            await dispatch ( loginFail() );
             await dispatch( hideBackDropStore() );
 
         }
@@ -46,6 +49,9 @@ export const getUsers = () => {
 export const getUser = (idUser = "") => {
 
     return async (dispatch, getState) => {
+
+        const {auth} = getState();
+        const token = auth.token
 
         await dispatch(showBackDropStore());
 
@@ -68,6 +74,8 @@ export const getUser = (idUser = "") => {
 
         } catch (error) {
 
+            await dispatch ( loginFail() );
+
             await dispatch( hideBackDropStore() );
             // Manejar errores
             console.error(error);
@@ -81,6 +89,9 @@ export const getUser = (idUser = "") => {
 export const editUser = (userData = "") => {
 
     return async (dispatch, getState) => {
+        
+        const {auth} = getState();
+        const token = auth.token
 
         await dispatch(showBackDropStore());
         
@@ -109,6 +120,8 @@ export const editUser = (userData = "") => {
 
         } catch (error) {
 
+            await dispatch ( loginFail() );
+
             await dispatch( hideBackDropStore() );
             // Manejar errores
             console.error(error);
@@ -122,6 +135,9 @@ export const editUser = (userData = "") => {
 export const createUser =  (userData) => {
 
     return async (dispatch, getState) => {
+
+        const {auth} = getState();
+        const token = auth.token
 
         await dispatch(showBackDropStore());
 
@@ -150,6 +166,8 @@ export const createUser =  (userData) => {
 
         } catch (error) {
 
+            await dispatch ( loginFail() );
+
             await dispatch( hideBackDropStore() );
             // Manejar errores
             console.error(error);
@@ -160,10 +178,12 @@ export const createUser =  (userData) => {
 
 }
 
-
 export const getDelete = (idUser = "") => {
 
     return async (dispatch, getState) => {
+
+        const {auth} = getState();
+        const token = auth.token
 
         await dispatch(showBackDropStore());
 
@@ -191,6 +211,9 @@ export const getDelete = (idUser = "") => {
             
 
         } catch (error) {
+
+            await dispatch ( loginFail() );
+            
             await dispatch( hideBackDropStore() );
             // Manejar errores
             console.error(error);

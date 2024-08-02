@@ -3,15 +3,17 @@ import toast from 'react-hot-toast';
 import { setDataDataSliders, setDataSlider, setClearData } from "./Sliders.js";
 import { showBackDropStore, hideBackDropStore } from '../sharedStore/shared.js';
 import { URL }      from "../../api/authApi.js";
-import constants    from "../../constants/constants.js";
-
-const token = constants.token;
+import { loginFail } from "../authStore/Auth.js";
 
 // Función asincrónica para obtener los Users
 export const getAll = () => {
 
     return async (dispatch, getState) => {
         
+        const {auth} = getState();
+
+        const token = auth.token
+
         await dispatch(showBackDropStore());
 
         // Iniciar la carga
@@ -38,6 +40,8 @@ export const getAll = () => {
             // Manejar errores
             console.error(error);
             
+            await dispatch( loginFail() );
+
             await dispatch( hideBackDropStore() );
 
         }
@@ -47,6 +51,10 @@ export const getAll = () => {
 export const getSlider = (id = "") => {
 
     return async (dispatch, getState) => {
+
+        const {auth} = getState();
+
+        const token = auth.token
 
         await dispatch(showBackDropStore());
 
@@ -69,6 +77,8 @@ export const getSlider = (id = "") => {
 
         } catch (error) {
 
+            await dispatch( loginFail() );
+
             await dispatch( hideBackDropStore() );
             // Manejar errores
             console.error(error);
@@ -82,6 +92,10 @@ export const getSlider = (id = "") => {
 export const editSlider = (data = "") => {
 
     return async (dispatch, getState) => {
+
+        const {auth} = getState();
+
+        const token = auth.token
 
         await dispatch(showBackDropStore());
         
@@ -111,6 +125,8 @@ export const editSlider = (data = "") => {
 
         } catch (error) {
 
+            await dispatch( loginFail() );
+
             await dispatch( hideBackDropStore() );
             // Manejar errores
             console.error(error);
@@ -124,6 +140,10 @@ export const editSlider = (data = "") => {
 export const createSlider =  (categoryData) => {
 
     return async (dispatch, getState) => {
+
+        const {auth} = getState();
+
+        const token = auth.token
 
         await dispatch(showBackDropStore());
         const options = {
@@ -153,6 +173,8 @@ export const createSlider =  (categoryData) => {
             
 
         } catch (error) {
+            
+            await dispatch( loginFail() );
 
             await dispatch( hideBackDropStore() );
             // Manejar errores
@@ -167,6 +189,10 @@ export const createSlider =  (categoryData) => {
 export const createMany =  (data) => {
 
     return async (dispatch, getState) => {
+
+        const {auth} = getState();
+
+        const token = auth.token
 
         await dispatch(showBackDropStore());
         
@@ -198,6 +224,8 @@ export const createMany =  (data) => {
 
         } catch (error) {
 
+            await dispatch( loginFail() );
+
             await dispatch( hideBackDropStore() );
             // Manejar errores
             console.error(error);
@@ -212,6 +240,10 @@ export const getDelete = (id = "") => {
 
     return async (dispatch, getState) => {
 
+        const {auth} = getState();
+
+        const token = auth.token
+        
         await dispatch(showBackDropStore());
 
         const options = {
@@ -238,6 +270,9 @@ export const getDelete = (id = "") => {
             
 
         } catch (error) {
+
+            await dispatch( loginFail() );
+            
             await dispatch( hideBackDropStore() );
             // Manejar errores
             console.error(error);

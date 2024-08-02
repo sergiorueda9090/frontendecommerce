@@ -1,17 +1,20 @@
 import axios from "axios";
 import toast from 'react-hot-toast';
+import { loginFail } from "../authStore/Auth.js"; 
 import { setDataProducts, setDataProduct, setClearData } from "./Products.js";
 import { showBackDropStore, hideBackDropStore } from '../sharedStore/shared.js';
 import { URL }      from "../../api/authApi.js";
-import constants    from "../../constants/constants.js";
 
-const token = constants.token;
 
 // Función asincrónica para obtener los Users
 export const getAll = () => {
 
     return async (dispatch, getState) => {
         
+        const {auth} = getState();
+
+        const token = auth.token
+
         await dispatch(showBackDropStore());
 
         // Iniciar la carga
@@ -37,7 +40,7 @@ export const getAll = () => {
          
             // Manejar errores
             console.error(error);
-            
+            await dispatch( loginFail() );
             await dispatch( hideBackDropStore() );
 
         }
@@ -47,6 +50,10 @@ export const getAll = () => {
 export const getProduct = (id = "") => {
 
     return async (dispatch, getState) => {
+
+        const {auth} = getState();
+
+        const token = auth.token
 
         await dispatch(showBackDropStore());
 
@@ -69,6 +76,8 @@ export const getProduct = (id = "") => {
 
         } catch (error) {
 
+            await dispatch( loginFail() );
+
             await dispatch( hideBackDropStore() );
             // Manejar errores
             console.error(error);
@@ -82,6 +91,10 @@ export const getProduct = (id = "") => {
 export const editProduct =  (id = "", data ="") => {
 
     return async (dispatch, getState) => {
+
+        const {auth} = getState();
+
+        const token = auth.token
 
         await dispatch(showBackDropStore());
  
@@ -117,6 +130,8 @@ export const editProduct =  (id = "", data ="") => {
 
         } catch (error) {
 
+            await dispatch( loginFail() );
+
             await dispatch( hideBackDropStore() );
             // Manejar errores
             console.error(error);
@@ -131,6 +146,10 @@ export const editProduct =  (id = "", data ="") => {
 export const createProduct =  (data) => {
 
     return async (dispatch, getState) => {
+
+        const {auth} = getState();
+
+        const token = auth.token
 
         await dispatch(showBackDropStore());
  
@@ -166,6 +185,8 @@ export const createProduct =  (data) => {
 
         } catch (error) {
 
+            await dispatch( loginFail() );
+
             await dispatch( hideBackDropStore() );
             // Manejar errores
             console.error(error);
@@ -179,6 +200,10 @@ export const createProduct =  (data) => {
 export const createMany =  (data) => {
 
     return async (dispatch, getState) => {
+
+        const {auth} = getState();
+
+        const token = auth.token
 
         await dispatch(showBackDropStore());
         
@@ -214,6 +239,8 @@ export const createMany =  (data) => {
 
         } catch (error) {
 
+            await dispatch( loginFail() );
+
             await dispatch( hideBackDropStore() );
             // Manejar errores
             console.error(error);
@@ -227,6 +254,10 @@ export const createMany =  (data) => {
 export const deleteImage = (id) => {
 
     return async (dispatch, getState) => {
+
+        const {auth} = getState();
+
+        const token = auth.token
 
         await dispatch(showBackDropStore());
 
@@ -258,6 +289,9 @@ export const deleteImage = (id) => {
             
 
         } catch (error) {
+
+            await dispatch( loginFail() );
+
             await dispatch( hideBackDropStore() );
             // Manejar errores
             console.error(error);
@@ -272,6 +306,10 @@ export const getDeleteSize = (id, idColor, idQuantity) => {
 
     return async (dispatch, getState) => {
 
+        const {auth} = getState();
+
+        const token = auth.token
+        
         await dispatch(showBackDropStore());
         
         const options = {
@@ -297,6 +335,9 @@ export const getDeleteSize = (id, idColor, idQuantity) => {
             
 
         } catch (error) {
+
+            await dispatch( loginFail() );
+
             await dispatch( hideBackDropStore() );
             // Manejar errores
             console.error(error);
@@ -310,6 +351,10 @@ export const getDeleteSize = (id, idColor, idQuantity) => {
 export const getDelete = (id = "") => {
 
     return async (dispatch, getState) => {
+
+        const {auth} = getState();
+
+        const token = auth.token
 
         await dispatch(showBackDropStore());
 
@@ -344,6 +389,9 @@ export const getDelete = (id = "") => {
             
 
         } catch (error) {
+
+            await dispatch( loginFail() );
+            
             await dispatch( hideBackDropStore() );
             // Manejar errores
             console.error(error);
