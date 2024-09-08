@@ -12,7 +12,7 @@ import { getSlider, getDelete }     from '../../store/slidersStore/SlidersThunks
 import { getAll, getOrder}          from '../../store/ordersStore/OrdersThunks';
 import { openModalShared }          from '../../store/sharedStore/shared';
 import global                       from '../../constants/constants';
-import { getShow } from '../../store/ordersStateStore/OrdersStateThunks'; 
+import { getShow }                  from '../../store/ordersStateStore/OrdersStateThunks'; 
 
 export const DataTableView = () => {
     
@@ -48,10 +48,14 @@ export const DataTableView = () => {
             />
           ),
         },
-        { field: 'estadoTx',          headerName: 'State Tx',         width: 250, editable: true, },
-        { field: 'transactionState',  headerName: 'Transation State', width: 250, editable: true, },
-        { field: 'lapPaymentMethod',  headerName: 'Payment Method',   width: 250, editable: true, },
-        { field: 'created_at',        headerName: 'Fecha Creacion',   width: 250, editable: true, },
+        { field: 'state_pol',             headerName: 'State pol',          width: 250, editable: true, },
+        { field: 'payment_method',        headerName: 'Payment Method',     width: 250, editable: true, },
+        { field: 'payment_method_type',   headerName: 'Payment Method Type',width: 250, editable: true, },
+        { field: 'value',                 headerName: 'value',              width: 250, editable: true, },
+        { field: 'currency',              headerName: 'Currency',           width: 250, editable: true, },
+        { field: 'email_buyer',           headerName: 'Email Buyer',        width: 250, editable: true, },
+        { field: 'date',                  headerName: 'Date bought',        width: 250, editable: true, },
+        { field: 'created_at',            headerName: 'Fecha Creacion',     width: 250, editable: true, },
         {
             field: 'actions',
             headerName: 'Actions',

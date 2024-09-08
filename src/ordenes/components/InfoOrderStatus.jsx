@@ -71,6 +71,7 @@ export const InfoOrderStatus = () => {
     const dispatch = useDispatch();
 
     const [loading, setLoading] = useState(false);//true show icone loading and false show the icone send
+  
 
     const { dataOrderState, formOrderStateRedux } = useSelector( state => state.ordersState);
    
@@ -107,7 +108,7 @@ export const InfoOrderStatus = () => {
           
           setLoading(true);
     
-          if(formOrderState.order_status == "" || formOrderState.order_status == "notification"){
+          if(formOrderState.order_status == "" || formOrderState.order_status == "notification" || formOrderState.id_transaction == "" || formOrderState.id_orders == ""){
     
             toast.error("You need the Status of the order");
     
@@ -116,15 +117,19 @@ export const InfoOrderStatus = () => {
             return false;
     
           }else{
-    
+            
+
             await dispatch(createOrderState(formOrderState));
     
-            setFormOrderState({'order_status':'', 'create_note':'', 'id_order':id, 'id_user':''});
+            setFormOrderState({'order_status'   : dataOrderState.orderStatusTraceability.data[0].order_state, 
+                                'create_note'   : '', 
+                                'id_orders'     : '', 
+                                'id_user'       : '', 
+                                'id_transaction': id});
     
           }
     
           setLoading(false);
-    
       }
 
     return (
@@ -148,7 +153,7 @@ export const InfoOrderStatus = () => {
                          onChange={(e) => handleChangeForm(e)} />
 
               <Button onClick={(e) => handlecreate(e)} 
-                      loading={loading}
+                      disabled={loading}
                       sx={{mt:3}} variant="contained"  
                       endIcon={loading ? <CircularProgress size={20}  color="inherit" /> : <SendIcon />}>Update Order Status</Button>
 

@@ -59,8 +59,6 @@ export const createOrderState =  (data) => {
         
         data.id_orders  = data.id_orders.join(',')
 
-        console.log("data ",data);
-        
         await dispatch(showBackDropStore());
 
         const options = {

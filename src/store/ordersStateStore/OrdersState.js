@@ -78,7 +78,7 @@ export const OrdersState = createSlice({
         "orderStatusTraceability": {
           "status": "",
           "message": "",
-          "data": [{"order_state":"notification"}]
+          "data": {"order_state":"notification"}
         }
       }
     },

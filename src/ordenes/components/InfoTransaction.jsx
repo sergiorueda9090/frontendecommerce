@@ -35,20 +35,23 @@ export const InfoTransaction = () => {
             <TableContainer component={Paper}>
                 <Table aria-label="dynamic database information table">
                     <TableBody>
-                    {/* Itera sobre cada fila de 'data' */}
-                    {dataOrderState.transaction.data.map((row, rowIndex) => (
-                        // Por cada fila de datos, se iteran sus claves y valores
-                        Object.entries(row).map(([key, value], cellIndex) => (
-                        <TableRow key={`${rowIndex}-${cellIndex}`}>
-                            {/* Muestra la clave */}
-                            <TableCell component="th" scope="row" align="left" style={{ fontWeight: 'bold' }}>
-                            {key} 
-                            </TableCell>
-                            {/* Muestra el valor */}
-                            <TableCell align="left">{value !== null ? value : 'N/A'}</TableCell>
-                        </TableRow>
-                        ))
-                    ))}
+                        {/* Itera sobre cada fila de 'data' */}
+                        {dataOrderState.transaction.data.map((row, rowIndex) => (
+                            // Por cada fila de datos, se iteran sus claves y valores
+                            Object.entries(row).map(([key, value], cellIndex) => (
+                            // Condicional para no mostrar la fila con la clave 'data'
+                            key !== 'data' && (
+                                <TableRow key={`${rowIndex}-${cellIndex}`}>
+                                {/* Muestra la clave */}
+                                <TableCell component="th" scope="row" align="left" style={{ fontWeight: 'bold' }}>
+                                    {key}
+                                </TableCell>
+                                {/* Muestra el valor */}
+                                <TableCell align="left">{value !== null ? value : 'N/A'}</TableCell>
+                                </TableRow>
+                            )
+                            ))
+                        ))}
                     </TableBody>
                 </Table>
             </TableContainer>
