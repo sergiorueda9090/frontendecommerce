@@ -1,5 +1,5 @@
 import axios from "axios";
-import { startLoaging, setAuthenticated, loginSuccess, loginFail } from "./Auth.js";
+import { setAuthenticated, loginSuccess, loginFail } from "./Auth.js";
 import { URL } from "../../api/authApi.js";
 
 // Función asincrónica para obtener los Pokemons
@@ -8,7 +8,6 @@ export const getAuth = (email='',password='') => {
     return async (dispatch, getState) => {
 
         // Iniciar la carga
-        await dispatch(startLoaging());
 
         const options = {
             method: 'POST',
@@ -29,8 +28,6 @@ export const getAuth = (email='',password='') => {
             
             // Despachar la acción setAuthenticated con la respuesta de la solicitud
             await dispatch(setAuthenticated({ infoUser: response.data }));
-
-            await dispatch(loginSuccess());
       
         } catch (error) {
          
@@ -46,39 +43,36 @@ export const getAuth = (email='',password='') => {
 
 export const getLoginSuccess = () => {
     
-    let data;
-
-    if(localStorage.getItem("infoUser")){
-        data = JSON.parse(localStorage.getItem("infoUser"));
-    }
-
-    console.log("getLoginSuccess ",data)
     return async (dispatch, getState) => {
 
-        await dispatch(loginSuccess(    {token         : data?.access_token ?? '',
+        if(localStorage.getItem("infoUser")){
+
+            let data = JSON.parse(localStorage.getItem("infoUser"));
+
+            await dispatch(loginSuccess({token         : data?.access_token ?? '',
                                          name_user     : data?.user.name ?? '',
                                          email         : data?.user.email ?? '',
-                                         validateToken : data?.validateToken ?? false}
-                                    )
-                    )
+                                         islogin       : "ok"}))
 
+        }else{
+
+            await dispatch(loginSuccess({token     : '',
+                                        name_user  : '',
+                                        email      : '',
+                                        islogin    : "error"}))
+
+
+        }
+    
     }
 }
 
 export const closeSession = () => {
     
-
-    
         return async (dispatch, getState) => {
     
-            await dispatch(loginSuccess(    {token         : '',
-                                             name_user     : '',
-                                             email         : '',
-                                             validateToken : false}
-                                        )
-                        )
+            await dispatch(loginFail() )
     
         }
     
-
 }

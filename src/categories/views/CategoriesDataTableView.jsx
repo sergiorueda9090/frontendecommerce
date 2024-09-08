@@ -10,6 +10,7 @@ import { SimpleBackdrop }           from '../../components/Backdrop/BackDrop';
 import useToastDelete               from '../../components/alerts/useToastDelete';
 import { getCategories, getCategory, getDelete } from '../../store/categoriesStore/categoriesThunks';
 import { openModalShared }          from '../../store/sharedStore/shared';
+import global                       from '../../constants/constants';
 
 export const CategoriesDataTableView = () => {
     
@@ -39,7 +40,7 @@ export const CategoriesDataTableView = () => {
           editable: true,
           renderCell: (params) => (
             <img
-              src={'http://ecommerce/public/'+params.value}
+              src={`${global.url}`+params.value}
               alt="Category"
               style={{ width: 50, height: 50, objectFit: 'cover' }}
             />

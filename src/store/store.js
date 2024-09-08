@@ -7,6 +7,9 @@ import { SubCategories }  from './subcategoriesStore/SubCategories.js';
 import { Products }       from './productsStore/Products.js';
 import { Sliders }        from './slidersStore/Sliders.js';
 import { Banner }         from './bannerStore/Banner.js';
+import { Orders }         from './ordersStore/Orders.js';
+import { OrdersState }    from './ordersStateStore/OrdersState.js';
+import { Transactions }   from './transactionsStore/transactionsStore.js';
 
 export const store = configureStore({
   reducer: {
@@ -17,6 +20,9 @@ export const store = configureStore({
     subcategories: SubCategories.reducer,
     products     : Products.reducer,
     sliders      : Sliders.reducer,
-    banner       : Banner.reducer
+    banner       : Banner.reducer,
+    orders       : Orders.reducer,
+    ordersState  : OrdersState.reducer,
+    transactions : Transactions.reducer
   },
 });

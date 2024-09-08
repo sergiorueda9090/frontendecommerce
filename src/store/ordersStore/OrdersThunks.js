@@ -1,13 +1,12 @@
 import axios from "axios";
 import toast from 'react-hot-toast';
-import { setDataUsers,setDataUser } from "./Users.js";
+import { setDataDataOrders, setDataOrder, setClearData } from "./Orders.js";
 import { showBackDropStore, hideBackDropStore } from '../sharedStore/shared.js';
+import { URL }      from "../../api/authApi.js";
 import { loginFail } from "../authStore/Auth.js";
-import { URL } from "../../api/authApi.js";
-
 
 // Función asincrónica para obtener los Users
-export const getUsers = () => {
+export const getAll = () => {
 
     return async (dispatch, getState) => {
         
@@ -20,7 +19,7 @@ export const getUsers = () => {
         // Iniciar la carga
         const options = {
             method: 'GET',
-            url: `${ URL}/api/listAllUsers`,
+            url: `${ URL}/api/listAllOrdenes`,
             headers: {
               Authorization: `Token ${token}`
             }
@@ -30,8 +29,9 @@ export const getUsers = () => {
         try {
             // Hacer la solicitud
             const response = await axios.request(options);
+            
             // Despachar la acción setAuthenticated con la respuesta de la solicitud
-            await dispatch(setDataUsers({ dataUsers: response.data }));
+            await dispatch(setDataDataOrders({ dataOrders: response.data.data, pager: response.data.pager }));
 
             await dispatch( hideBackDropStore() );
 
@@ -40,26 +40,27 @@ export const getUsers = () => {
             // Manejar errores
             console.error(error);
             
-            await dispatch ( loginFail() );
-            
+            await dispatch( loginFail() );
+
             await dispatch( hideBackDropStore() );
 
         }
     };
 };
 
-export const getUser = (idUser = "") => {
+export const getOrder = (id = "") => {
 
     return async (dispatch, getState) => {
 
         const {auth} = getState();
+
         const token = auth.token
 
         await dispatch(showBackDropStore());
 
         const options = {
             method: 'GET',
-            url: `${ URL}/api/showUser/${idUser}`,
+            url: `${ URL}/api/showSlider/${id}`,
             headers: {
               Authorization: `Token ${token}`
             }
@@ -68,15 +69,15 @@ export const getUser = (idUser = "") => {
           try {
             // Hacer la solicitud
             const response = await axios.request(options);
-           
+
             // Despachar la acción setAuthenticated con la respuesta de la solicitud
-            await dispatch(setDataUser({ dataUser: response.data.data }));
+            await dispatch(setDataOrder({ dataSlider:  response.data.data[0] }));
             
             await dispatch( hideBackDropStore() );
 
         } catch (error) {
 
-            await dispatch ( loginFail() );
+            await dispatch( loginFail() );
 
             await dispatch( hideBackDropStore() );
             // Manejar errores
@@ -88,33 +89,35 @@ export const getUser = (idUser = "") => {
 
 }
 
-export const editUser = (userData = "") => {
+export const editSlider = (data = "") => {
 
     return async (dispatch, getState) => {
-        
+
         const {auth} = getState();
+
         const token = auth.token
 
         await dispatch(showBackDropStore());
         
         const options = {
             method: 'POST',
-            url: `${ URL}/api/updateUser/${userData.id}`,
+            url: `${ URL}/api/updateSlider/${data.id}`,
             headers: {
               Authorization: `Token ${token}`,
               'content-type': 'multipart/form-data; boundary=---011000010111000001101001'
             },
-            data:userData
+            data:data
           };
 
           try {
             // Hacer la solicitud
             const response = await axios.request(options);
- 
+
             if(response.data.status){
                 await dispatch( hideBackDropStore() );
-                await dispatch( getUsers() );
-                toast.success('Successfully created!');
+                await dispatch( setClearData() );
+                await dispatch( getAll() );
+                toast.success('Successfully Update!');
             }else{
                 toast.error('This is an error!');;
             }
@@ -122,7 +125,7 @@ export const editUser = (userData = "") => {
 
         } catch (error) {
 
-            await dispatch ( loginFail() );
+            await dispatch( loginFail() );
 
             await dispatch( hideBackDropStore() );
             // Manejar errores
@@ -134,23 +137,23 @@ export const editUser = (userData = "") => {
 
 }
 
-export const createUser =  (userData) => {
+export const createSlider =  (categoryData) => {
 
     return async (dispatch, getState) => {
 
         const {auth} = getState();
+
         const token = auth.token
 
         await dispatch(showBackDropStore());
-
         const options = {
             method: 'POST',
-            url: `${ URL}//api/createUser`,
+            url: `${ URL}/api/createSlider`,
             headers: {
                 Authorization: `Token ${token}`,
                 'content-type': 'multipart/form-data; boundary=---011000010111000001101001'
               },
-            data:userData
+            data:categoryData
         }
 
         try {
@@ -159,16 +162,19 @@ export const createUser =  (userData) => {
  
             if(response.data.status){
                 await dispatch( hideBackDropStore() );
-                await dispatch( getUsers() );
+                await dispatch( setClearData() );
+                await dispatch( getAll() );
                 toast.success('Successfully created!');
             }else{
-                toast.error('This is an error!');;
+                await dispatch( hideBackDropStore() );
+                await dispatch( getAll() );
+                toast.error(`${response.data.message} ${response.data.data}`);
             }
             
 
         } catch (error) {
-
-            await dispatch ( loginFail() );
+            
+            await dispatch( loginFail() );
 
             await dispatch( hideBackDropStore() );
             // Manejar errores
@@ -180,18 +186,69 @@ export const createUser =  (userData) => {
 
 }
 
-export const getDelete = (idUser = "") => {
+export const createMany =  (data) => {
 
     return async (dispatch, getState) => {
 
         const {auth} = getState();
+
         const token = auth.token
 
+        await dispatch(showBackDropStore());
+        
+        const options = {
+            method: 'POST',
+            url: `${ URL}/api/createManySubCategory`,
+            headers: {
+                Authorization: `Token ${token}`,
+                'content-type': 'multipart/form-data; boundary=---011000010111000001101001'
+              },
+            data:{ data }
+        }
+
+        try {
+            // Hacer la solicitud
+            const response = await axios.request(options);
+ 
+            if(response.data.status){
+                await dispatch( hideBackDropStore() );
+                await dispatch( setClearData() );
+                await dispatch( getAll() );
+                toast.success('Successfully created!');
+            }else{
+                await dispatch( hideBackDropStore() );
+                await dispatch( getAll() );
+                toast.error(`${response.data.message} ${response.data.data}`);
+            }
+            
+
+        } catch (error) {
+
+            await dispatch( loginFail() );
+
+            await dispatch( hideBackDropStore() );
+            // Manejar errores
+            console.error(error);
+       
+        }
+
+    }
+
+}
+
+export const getDelete = (id = "") => {
+
+    return async (dispatch, getState) => {
+
+        const {auth} = getState();
+
+        const token = auth.token
+        
         await dispatch(showBackDropStore());
 
         const options = {
             method: 'DELETE',
-            url: `${ URL}/api/deleteUser/${idUser}`,
+            url: `${ URL}/api/deleteslider/${id}`,
             headers: {
               Authorization: `Token ${token}`
             }
@@ -205,7 +262,7 @@ export const getDelete = (idUser = "") => {
             
             // Despachar la acción setAuthenticated con la respuesta de la solicitud
             if(response.data.status){
-                await dispatch( getUsers() );
+                await dispatch( getAll() );
                 toast.success('Successfully Delete!');
             }else{
                 toast.error('This is an error!');;
@@ -214,7 +271,7 @@ export const getDelete = (idUser = "") => {
 
         } catch (error) {
 
-            await dispatch ( loginFail() );
+            await dispatch( loginFail() );
             
             await dispatch( hideBackDropStore() );
             // Manejar errores
@@ -224,3 +281,10 @@ export const getDelete = (idUser = "") => {
     }
 
 }
+
+export const clearDataSlider = () => {
+    return async (dispatch, getState) => {
+        await dispatch( setClearData() );
+    }
+}
+

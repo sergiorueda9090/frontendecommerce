@@ -40,4 +40,4 @@ export const Users = createSlice({
 })
 
 // Action creators are generated for each case reducer function
-export const { startLoaging, setDataUsers, setDataUser, setClearUser } = Users.actions;
+export const { setDataUsers, setDataUser, setClearUser } = Users.actions;

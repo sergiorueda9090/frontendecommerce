@@ -12,6 +12,7 @@ import { getProduct, getDelete }    from '../../store/productsStore/ProductsThun
 import { getAll } from '../../store/productsStore/ProductsThunks';
 import { openModalShared }          from '../../store/sharedStore/shared';
 
+
 export const DataTableView = () => {
     
     const requestConfirmation = useToastDelete();

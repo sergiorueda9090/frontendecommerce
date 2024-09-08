@@ -12,6 +12,12 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+import Menu from '@mui/material/Menu';
+
+
+import { useDispatch } from 'react-redux';
+import { closeSession } from '../store/authStore/authThunks';
 
 const drawerWidth = 240;
 
@@ -43,6 +49,22 @@ const StyledBadge = styled(Badge)(({ theme }) => ({
 }));
 
 export function NavBar({ open, handleDrawerOpen, nameModule }) {
+
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const dispatch = useDispatch();
+
+  const handleMenu = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const handleCloseSession = () => {
+    dispatch(closeSession());
+  }
+
   return (
     <AppBar position="fixed" open={open}>
       <Toolbar>
@@ -72,8 +94,32 @@ export function NavBar({ open, handleDrawerOpen, nameModule }) {
             <ShoppingCartIcon sx={{ color: 'white' }} />
           </StyledBadge>
         </IconButton>
-        
-        <Avatar alt="Remy Sharp" src="https://mui.com/static/images/avatar/1.jpg" sx={{ ml:'10px' }}/>
+        <div>
+        <Avatar onClick={handleMenu} alt="Remy Sharp" src="https://mui.com/static/images/avatar/1.jpg" sx={{ ml:'10px' }}/>
+
+<Menu
+        id="menu-appbar"
+        sx={{ mt: '45px' }}
+        anchorEl={anchorEl}
+        anchorOrigin={{
+          vertical: 'top',
+          horizontal: 'right',
+        }}
+        keepMounted
+        transformOrigin={{
+          vertical: 'top',
+          horizontal: 'right',
+        }}
+        open={Boolean(anchorEl)}
+        onClose={handleClose}
+      >
+        <MenuItem onClick={handleClose}>Profile</MenuItem>
+        <MenuItem onClick={handleClose}>My account</MenuItem>
+        <MenuItem onClick={handleCloseSession}>Close session</MenuItem>
+      </Menu>
+        </div>
+
+
       </Toolbar>
     </AppBar>
   );

@@ -5,7 +5,7 @@ const global = {
     "email"         : "",
     "validateToken" : "",
     "url"           : "http://ecommerce/public/",
-    "urlproduction" : "http://34.195.84.240/ecommerce/public/"
+    /*"urlproduction" : "https://ecommerce.sergiodevsolutions.com/"*/
 }
 
 export default global;
