@@ -5,6 +5,8 @@ import { JournalPage }              from '../journal/pages/JournalPage';
 import { UsersPage }                from '../users/pages/UsersPage';
 import { CategoriesPage }           from '../categories/pages/CategoriesPage';
 import { Page as Subcategories }    from '../subcategories/pages/Page';
+import { Page as Brands }           from '../brands/pages/Page';
+import { Page as Genders }           from '../genders/pages/Page';
 import { Page as Products }         from '../products/pages/Page';
 import { Page as Sliders }          from '../sliders/pages/Page';
 import { Page as Banner }           from '../banner/pages/Page';
@@ -33,6 +35,8 @@ export const AppRouter = () => {
             <Route path="/users"          element={<UsersPage />} />
             <Route path="/categories"     element={<CategoriesPage />} />
             <Route path="/subcategories"  element={<Subcategories />} />
+            <Route path="/Brands"         element={<Brands />} />
+            <Route path="/Genders"        element={<Genders />} />
             <Route path="/products"       element={<Products />} />
             <Route path="/sliders"        element={<Sliders />} />
             <Route path="/banner"         element={<Banner />} />

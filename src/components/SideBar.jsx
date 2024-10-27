@@ -89,6 +89,8 @@ const descriptions = {
     Payments:'',
     Categories: 'View and edit categories',
     Subcategories: 'Manage subcategories of products',
+    Genders: 'Manage genders',
+    Brands: 'Manage brands',
     Products: 'View and manage products',
     Sliders: 'Manage sliders for the homepage',
     Banner: 'Edit homepage banners',
@@ -102,6 +104,8 @@ const iconColors = {
     Payments: 'yellow',
     Categories: 'green',
     Subcategories: 'orange',
+    Brands: 'red',
+    Genders: 'green',
     Products: 'purple',
     Sliders: 'red',
     Banner: 'pink',
@@ -128,7 +132,7 @@ export function SideBar({ open, handleDrawerClose, username ="Sergio Rueda" }) {
       <Divider />
    
       <List>
-    {['Users','Payments', 'Categories', 'Subcategories', 'Products', 'Sliders', 'Banner', 'Ordenes', 'Transactions', 'Messaging'].map((text) => (
+    {['Users','Payments', 'Categories', 'Subcategories','Brands','Genders', 'Products', 'Sliders', 'Banner', 'Ordenes', 'Transactions', 'Messaging'].map((text) => (
       <ListItem key={text} disablePadding>
         <ListItemButton component={StyledLink} to={`/${text.toLowerCase()}`}>
           <ListItemIcon>
@@ -137,6 +141,8 @@ export function SideBar({ open, handleDrawerClose, username ="Sergio Rueda" }) {
               {text === 'Payments' && <PointOfSaleIcon sx={{ color: iconColors.Categories }} />}
               {text === 'Categories' && <CategoryIcon sx={{ color: iconColors.Categories }} />}
               {text === 'Subcategories' && <SubdirectoryArrowRightIcon sx={{ color: iconColors.Subcategories }} />}
+              {text === 'Brands' && <SubdirectoryArrowRightIcon sx={{ color: iconColors.Brands }} />}
+              {text === 'Genders' && <SubdirectoryArrowRightIcon sx={{ color: iconColors.Genders }} />}
               {text === 'Products' && <ShoppingCartIcon sx={{ color: iconColors.Products }} />}
               {text === 'Sliders' && <BurstModeIcon sx={{ color: iconColors.Sliders }} />}
               {text === 'Banner' && <ViewCarouselIcon sx={{ color: iconColors.Banner }} />}

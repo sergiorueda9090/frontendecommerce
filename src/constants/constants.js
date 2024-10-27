@@ -4,7 +4,7 @@ const global = {
     "name_user"     : "",
     "email"         : "",
     "validateToken" : "",
-    "url"           : "http://ecommerce/public/",
+    "url"           : "http://ecommerce/",
     /*"urlproduction" : "https://ecommerce.sergiodevsolutions.com/"*/
 }
 
