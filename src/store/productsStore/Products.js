@@ -10,62 +10,168 @@ export const Products = createSlice({
         "status": true,
         "message": "",
         "data": {
-            "id"                : "",
-            "id_subcategories"  : "",
-            "id_categories"     : "", 
-            "id_category"       : "",
-            "name_category"     : "", 
-            "id_user"           : "",
-            "name"              : "",
-            "slug"              : "",
-            "description"       : "",
-            "details"           : "",
-            "discount"          : "",
-            "keywords"          : [],
-            "percentage_profit" : "",
-            "purchase_price"    : "",
-            "sale_price"        : "",
-            "specifications"    : "",
-            "created_at"        : "",
-            "updated_at"        : "",
-            "deleted_at"        : "",
+          "id"               : "", 
+          "id_user"          : "", 
+          "id_categories"    : "", 
+          "id_category"      : "",
+          "id_brand"         : "",
+          "id_gender"        : "",
+          "id_productattributes": "", //only use in edit
+          "name_category"    : "", 
+          "id_subcategories" : "",
+          "name_subcategory" : "",
+          "name"             : "", 
+          "attribute"        : "",
+          "valueAttribute"   : "",
+          "color"            : "",
+          "cantidad"         : "",
+          "arrayAttributes"  : [],
+          "slug"             : "",
+          "description"      : "", 
+          "details"          : "", 
+          "specifications"   : [], 
+          "purchase_price"   : "",
+          "percentage_profit": "",
+          "sale_price"       : "",
+          "discount"         : "",
+          "size"             : "",
+          "sizes"            : [],
+          "quantity"         : "",
+          "keywords"         : [], 
+          "icon"             : "", 
+          "image"            : "",
+          "images"           : []
         },
         "images":[],
         "size"  : [],
     },
+    clearProduct:{
+      "status": true,
+      "message": "",
+      "data": {
+        "id"               : "", 
+        "id_user"          : "", 
+        "id_categories"    : "", 
+        "id_category"      : "",
+        "id_brand"         : "",
+        "id_gender"        : "",
+        "id_productattributes": "", //only use in edit
+        "name_category"    : "", 
+        "id_subcategories" : "",
+        "name_subcategory" : "",
+        "name"             : "", 
+        "attribute"        : "",
+        "valueAttribute"   : "",
+        "color"            : "",
+        "cantidad"         : "",
+        "arrayAttributes"  : [],
+        "slug"             : "",
+        "description"      : "", 
+        "details"          : "", 
+        "specifications"   : [], 
+        "purchase_price"   : "",
+        "percentage_profit": "",
+        "sale_price"       : "",
+        "discount"         : "",
+        "size"             : "",
+        "sizes"            : [],
+        "quantity"         : "",
+        "keywords"         : [], 
+        "icon"             : "", 
+        "image"            : "",
+        "images"           : []
+      },
+      "images":[],
+      "size"  : [],
+  }
   },
   reducers: {
     setClearData:(state, action) => {
-      state.dataProduc.data = {
-        "id"            : "",
-        "id_categorie"  : "",
-        "id_categories" : "", 
-        "id_category"   : "",
-        "name_category" : "", 
-        "id_user"       : "",
-        "name"          : "",
-        "slug"          : "",
-        "description"   : "",
-        "keywords"      : [],
-        "icon"          : "",
-        "image"         : "",
-        "created_at"    : "",
-        "updated_at"    : "",
-        "deleted_at"    : "",
-      }
+      state.dataProduc = state.clearProduct
     },
     setDataProducts:(state, action) => {
         state.dataProducts = action.payload.data;
         state.pager        = action.payload.pager 
     },
     setDataProduct:(state, action) => {
-        state.dataProduc.data           = action.payload.data.product[0];
-        state.dataProduc.data.keywords  = action.payload.data.product[0].keywords.split(',');
-        state.dataProduc.images         = action.payload.data.image;
-        state.dataProduc.size           = action.payload.data.size;
-    }
+      state.dataProduc.data                 = action.payload.product;
+      state.dataProduc.data.id_productattributes = action.payload.id_productattributes;
+      state.dataProduc.data.specifications  = action.payload.specifications;
+      state.dataProduc.data.keywords        = action.payload.product.keywords.split(', ');
+      state.dataProduc.data.arrayAttributes = action.payload.arrayAttributes;
+      state.dataProduc.data.images          = action.payload.imagesArray;
+    },
+    setAddAttributeArray:(state, action) => {
+      state.dataProduc.data.arrayAttributes = [...state.dataProduc.data.arrayAttributes, action.payload];
+    },
+    setRemoveAttributeArray:(state, action) => {
+      console.log("action.payload ",action.payload)
+      state.dataProduc.data.arrayAttributes = action.payload;
+    },
+    setAddImagesArray:(state, action) => {
+      state.dataProduc.data.images = action.payload;
+    },
+
+    setFormDataProduct:(state, action) => {
+      const { name, value, sale_price, slug, keywords, id_categories, 
+             name_category, id_category, id_subcategories, name_subcategory, specifications,
+             description,details } = action.payload; // Desestructura el nombre y valor
+
+      if (name) {
+        state.dataProduc.data[name] = value;
+      }
+      
+      if (sale_price !== undefined) {
+        state.dataProduc.data.sale_price = sale_price; // Actualiza el precio de venta
+      }
+
+      if (slug !== undefined) {
+        state.dataProduc.data.slug = slug; // Actualiza el precio de venta
+      }
+
+      if(keywords !== undefined) {
+        state.dataProduc.data.keywords = keywords; // Actualiza el precio de venta
+      }
+
+      if(id_categories!== undefined) {
+        state.dataProduc.data.id_categories = id_categories;
+      }
+
+      if(name_category!== undefined) {
+        state.dataProduc.data.name_category = name_category;
+      }
+
+      if(id_category!== undefined) {
+        state.dataProduc.data.id_category = id_category;
+      }
+
+      if(id_subcategories !== undefined) {
+        state.dataProduc.data.id_subcategories = id_subcategories;
+      }
+
+      if(name_subcategory !== undefined) {
+        state.dataProduc.data.name_subcategory = name_subcategory;
+      }
+
+      if(specifications !== undefined) {
+        console.log("specifications ",specifications)
+        state.dataProduc.data.specifications = specifications;
+      }
+
+      if(description !== undefined) {
+        state.dataProduc.data.description = description;
+      }
+
+      if(details !== undefined) {
+        state.dataProduc.data.details = details;
+      }
+
+
+      
+    },
+
   }
 })
 
 // Action creators are generated for each case reducer function
-export const { setClearData, setDataProducts, setDataProduct } = Products.actions;
+export const { setClearData, setDataProducts, setDataProduct, setAddAttributeArray, setRemoveAttributeArray, setAddImagesArray, setFormDataProduct } = Products.actions;

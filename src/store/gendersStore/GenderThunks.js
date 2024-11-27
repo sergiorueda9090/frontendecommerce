@@ -2,7 +2,7 @@ import axios from "axios";
 import toast from 'react-hot-toast';
 import { loginFail } from "../authStore/Auth.js"; 
 import { setClearData, setDataGenders, setDataGender } from "./Gender.js";
-import { showBackDropStore, hideBackDropStore } from '../sharedStore/shared.js';
+import { showBackDropStore, hideBackDropStore, hideLinearProgress,showLinearProgress } from '../sharedStore/shared.js';
 import { URL }      from "../../api/authApi.js";
 
 
@@ -284,3 +284,48 @@ export const clearDataGender = () => {
     }
 }
 
+export const getGenderByCategory = (idCategory = "", idSubCategory = "") => {
+
+    return async (dispatch, getState) => {
+
+        const {auth} = getState();
+
+        const token = auth.token
+        
+        await dispatch(showLinearProgress);
+
+        await dispatch(showBackDropStore());
+
+        const options = {
+            method: 'GET',
+            url: `${ URL}/api/getGenderByCategory/${idCategory}/${idSubCategory}`,
+            headers: {
+              Authorization: `Token ${token}`
+            }
+          };
+
+          try {
+            // Hacer la solicitud
+            const response = await axios.request(options);
+
+            // Despachar la acción setAuthenticated con la respuesta de la solicitud
+            await dispatch(setDataGenders({ dataGenders: response.data.data, pager: response.data.pager }));
+            
+            await dispatch( hideBackDropStore() );
+
+            await dispatch(hideLinearProgress());
+        } catch (error) {
+
+            await dispatch( loginFail() );
+
+            await dispatch( hideBackDropStore() );
+
+            await dispatch(hideLinearProgress());
+            // Manejar errores
+            console.error(error);
+       
+        }
+
+    }
+
+}

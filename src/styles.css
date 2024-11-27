@@ -1,3 +1,36 @@
 .box-shadow{
   box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.2);
 }
+
+.table-responsive > .table-bordered {
+  border: 0; /* Ensures the outer border isn't doubled */
+}
+
+.table-bordered {
+  border: 1px solid #dee2e6;
+}
+
+.table {
+  width: 100%;
+  margin-bottom: 1rem;
+  color: #212529;
+}
+
+table {
+  border-collapse: separate; /* This will separate cells */
+  border-spacing: 0; /* Set to 0 to avoid extra spacing */
+}
+
+td, th {
+  border: 1px solid #dee2e6; /* Border around each cell */
+  padding: 0.75rem; /* Padding for better readability */
+}
+
+* {
+  font-family: "Work Sans", sans-serif;
+  font-weight: 400;
+}
+
+*, ::after, ::before {
+  box-sizing: border-box;
+}

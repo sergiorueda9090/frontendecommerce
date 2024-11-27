@@ -9,14 +9,17 @@ import { ModalBody }                from '../modal/ModalBody';
 import { SimpleBackdrop }           from '../../components/Backdrop/BackDrop'; 
 import useToastDelete               from '../../components/alerts/useToastDelete';
 import { getProduct, getDelete }    from '../../store/productsStore/ProductsThunks'; 
-import { getAll } from '../../store/productsStore/ProductsThunks';
+import { getAll,clearContentProduct } from '../../store/productsStore/ProductsThunks';
 import { openModalShared }          from '../../store/sharedStore/shared';
 
+import { useNavigate }              from 'react-router-dom';
 
 export const DataTableView = () => {
     
-    const requestConfirmation = useToastDelete();
+    const navigate = useNavigate();
 
+    const requestConfirmation = useToastDelete();
+    
     const { dataProducts, pager }       = useSelector( state =>   state.products)
 
     const [page,      setPage]     = useState(1);  //CURRENT PAGE
@@ -32,6 +35,7 @@ export const DataTableView = () => {
     const dispatch = useDispatch();
 
     useEffect(() => {
+      dispatch(clearContentProduct());
       dispatch(getAll());
     },[])
 
@@ -103,8 +107,13 @@ export const DataTableView = () => {
       
     
       const handleEditClick = async(id) => {
+
         await dispatch(getProduct(id));
-        await dispatch(openModalShared());
+
+        //await dispatch(openModalShared());
+
+        navigate(`/products/showproduct/${id}`);
+
       };
       
       const handleDeleteClick = async(id) => {

@@ -85,7 +85,6 @@ export const ModalBody = () => {
   const [textDetails, setTextDetails]               = useState('');
   const [textSpecifications, setTextSpecifications] = useState('')
   
-
   const [formData, setFormData] = useState({"id"               : "", 
                                              "id_user"          : "", 
                                              "id_categories"    : "", 
@@ -996,7 +995,7 @@ export const ModalBody = () => {
               </div>
             </Grid>
 
-                  {console.log("images ",images)}
+   
             <Grid container spacing={2}>
 
                 <Grid item xs={12} sx={{ mt: 2, mb: 5 }}>

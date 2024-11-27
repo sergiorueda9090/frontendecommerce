@@ -10,6 +10,8 @@ import { Page as Genders }           from '../genders/pages/Page';
 import { Page as Products }         from '../products/pages/Page';
 import { Page as Sliders }          from '../sliders/pages/Page';
 import { Page as Banner }           from '../banner/pages/Page';
+
+import { ProductsRoute }            from '../products/routes/ProductsRoute';
 import { OrdersRoute }              from '../ordenes/routes/OrdenesRoute';
 import { TransactionsRoute }        from '../transactions/routes/TransactionsRoute';
 import { AuthRoutes }               from '../auth/routes/AuthRoutes';
@@ -37,7 +39,7 @@ export const AppRouter = () => {
             <Route path="/subcategories"  element={<Subcategories />} />
             <Route path="/Brands"         element={<Brands />} />
             <Route path="/Genders"        element={<Genders />} />
-            <Route path="/products"       element={<Products />} />
+            <Route path="/products/*"     element={<ProductsRoute />} />
             <Route path="/sliders"        element={<Sliders />} />
             <Route path="/banner"         element={<Banner />} />
             <Route path="/ordenes/*"      element={<OrdersRoute />} />

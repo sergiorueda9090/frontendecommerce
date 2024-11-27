@@ -1,10 +1,11 @@
 import axios from "axios";
 import toast from 'react-hot-toast';
 import { loginFail } from "../authStore/Auth.js"; 
-import { setDataProducts, setDataProduct, setClearData } from "./Products.js";
+import { setDataProducts, setDataProduct, setClearData, setAddAttributeArray } from "./Products.js";
 import { showBackDropStore, hideBackDropStore } from '../sharedStore/shared.js';
 import { URL }      from "../../api/authApi.js";
-
+import { getDataOption } from "../subcategoriesStore/SubCategoriesThunks.js";
+import { getBrandsByCategory } from "../brandsStore/BrandsThunks.js";                   
 
 // Función asincrónica para obtener los Users
 export const getAll = () => {
@@ -40,7 +41,7 @@ export const getAll = () => {
          
             // Manejar errores
             console.error(error);
-            await dispatch( loginFail() );
+            //await dispatch( loginFail() );
             await dispatch( hideBackDropStore() );
 
         }
@@ -70,13 +71,36 @@ export const getProduct = (id = "") => {
             const response = await axios.request(options);
 
             // Despachar la acción setAuthenticated con la respuesta de la solicitud
-            await dispatch(setDataProduct({ data: response.data.data }));
+            console.log("response.data.data ",response.data.data);
+
+            await dispatch(getDataOption(response.data.data.products[0].id_categories));
+            await dispatch(getBrandsByCategory(response.data.data.products[0].id_categories, response.data.data.products[0].id_subcategories))
+
+            let product         = response.data.data.products[0];
+            //let arrayAttributes = response.data.data.productattributes;
+            let arrayAttributes = response.data.data.valueattributes;
+            let imagesArray     = response.data.data.productimages;
+            let specifications  = JSON.parse(response.data.data.products[0].specifications);
+
+
+            console.log("product ",product);
+            console.log("arrayAttributes ",arrayAttributes)
+            console.log("imagesArray ",imagesArray)
+            
+
+            await dispatch(setDataProduct({ product         : product,
+                                            arrayAttributes : arrayAttributes,
+                                            imagesArray     : imagesArray,
+                                            specifications  : specifications,
+                                            id_productattributes: arrayAttributes[0].id
+                                          }
+                                        ));
             
             await dispatch( hideBackDropStore() );
 
         } catch (error) {
 
-            await dispatch( loginFail() );
+            //await dispatch( loginFail() );
 
             await dispatch( hideBackDropStore() );
             // Manejar errores
@@ -142,11 +166,10 @@ export const editProduct =  (id = "", data ="") => {
 
 }
 
-
 export const createProduct =  (data) => {
 
     return async (dispatch, getState) => {
-
+        
         const {auth} = getState();
 
         const token = auth.token
@@ -166,26 +189,24 @@ export const createProduct =  (data) => {
         try {
             // Hacer la solicitud
             const response = await axios.request(options);
- 
+        
             if(response.data.status){
-                
+                console.log("ingresa ok");
                 await dispatch( setClearData() );
                 await dispatch( getAll() );
                 await dispatch( hideBackDropStore() );
                 toast.success(response.data.message);
-
             }else{
-                
+                console.log("ingresa error");
                 await dispatch( getAll() );
                 await dispatch( hideBackDropStore() );
                 toast.error(`${response.data.message} ${response.data.data}`);
-
             }
             
 
         } catch (error) {
 
-            await dispatch( loginFail() );
+            //await dispatch( loginFail() );
 
             await dispatch( hideBackDropStore() );
             // Manejar errores
@@ -196,6 +217,209 @@ export const createProduct =  (data) => {
     }
 
 }
+
+export const updateOnlyProduct = (data) => {
+
+    return async (dispatch, getState) => {
+        
+        const {auth} = getState();
+
+        const token = auth.token
+
+        await dispatch(showBackDropStore());
+ 
+        const options = {
+            method: 'POST',
+            url: `${ URL}/api/updateOnlyProduct/${data.id}`,
+            headers: {
+                Authorization: `Token ${token}`,
+                'content-type': 'multipart/form-data; boundary=---011000010111000001101001'
+              },
+            data:data
+        }
+
+        try {
+            // Hacer la solicitud
+            const response = await axios.request(options);
+        
+            if(response.data.status){
+                //await dispatch( setClearData() );
+                //await dispatch( getAll() );
+                await dispatch( hideBackDropStore() );
+                toast.success(response.data.message);
+            }else{
+                console.log("ingresa error");
+                //await dispatch( getAll() );
+                await dispatch( hideBackDropStore() );
+                toast.error(`${response.data.message} ${response.data.data}`);
+            }
+            
+
+        } catch (error) {
+
+            //await dispatch( loginFail() );
+
+            await dispatch( hideBackDropStore() );
+            // Manejar errores
+            console.error(error);
+       
+        }
+
+    }
+}
+
+export const updateAddValueattributes = (data) => {
+
+    return async (dispatch, getState) => {
+        
+        const {auth} = getState();
+
+        const token = auth.token
+                
+        console.log("data ",data);
+
+        await dispatch(showBackDropStore());
+        const options = {
+            method: 'POST',
+            url: `${ URL}/api/updateAddValueattributes/${data.idProduct}/${data.idProductattributes}`,
+            headers: {
+                Authorization: `Token ${token}`,
+                'content-type': 'multipart/form-data; boundary=---011000010111000001101001'
+              },
+            data:data
+        }
+
+        try {
+            // Hacer la solicitud
+            const response = await axios.request(options);
+        
+            if(response.data.status){
+                //await dispatch( setClearData() );
+                //await dispatch( getAll() );
+                await dispatch( hideBackDropStore() );
+                toast.success(response.data.message);
+            }else{
+                console.log("ingresa error");
+                //await dispatch( getAll() );
+                await dispatch( hideBackDropStore() );
+                toast.error(`${response.data.message} ${response.data.data}`);
+            }
+            
+
+        } catch (error) {
+
+            //await dispatch( loginFail() );
+
+            await dispatch( hideBackDropStore() );
+            // Manejar errores
+            console.error(error);
+       
+        }
+
+    }
+}
+
+export const updateDescriptionProduct = (data) => {
+
+    return async (dispatch, getState) => {
+        
+        const {auth} = getState();
+
+        const token = auth.token
+
+        await dispatch(showBackDropStore());
+ 
+        const options = {
+            method: 'POST',
+            url: `${ URL}/api/updateDescriptionProduct/${data.id}`,
+            headers: {
+                Authorization: `Token ${token}`,
+                'content-type': 'multipart/form-data; boundary=---011000010111000001101001'
+              },
+            data:data
+        }
+
+        try {
+            // Hacer la solicitud
+            const response = await axios.request(options);
+        
+            if(response.data.status){
+                //await dispatch( setClearData() );
+                //await dispatch( getAll() );
+                await dispatch( hideBackDropStore() );
+                toast.success(response.data.message);
+            }else{
+                console.log("ingresa error");
+                //await dispatch( getAll() );
+                await dispatch( hideBackDropStore() );
+                toast.error(`${response.data.message} ${response.data.data}`);
+            }
+            
+
+        } catch (error) {
+
+            //await dispatch( loginFail() );
+
+            await dispatch( hideBackDropStore() );
+            // Manejar errores
+            console.error(error);
+       
+        }
+
+    }
+}
+
+export const updateDetailsProduct = (data) => {
+
+    return async (dispatch, getState) => {
+        
+        const {auth} = getState();
+
+        const token = auth.token
+
+        await dispatch(showBackDropStore());
+ 
+        const options = {
+            method: 'POST',
+            url: `${ URL}/api/updateDetailsProduct/${data.id}`,
+            headers: {
+                Authorization: `Token ${token}`,
+                'content-type': 'multipart/form-data; boundary=---011000010111000001101001'
+              },
+            data:data
+        }
+
+        try {
+            // Hacer la solicitud
+            const response = await axios.request(options);
+        
+            if(response.data.status){
+                //await dispatch( setClearData() );
+                //await dispatch( getAll() );
+                await dispatch( hideBackDropStore() );
+                toast.success(response.data.message);
+            }else{
+                console.log("ingresa error");
+                //await dispatch( getAll() );
+                await dispatch( hideBackDropStore() );
+                toast.error(`${response.data.message} ${response.data.data}`);
+            }
+            
+
+        } catch (error) {
+
+            //await dispatch( loginFail() );
+
+            await dispatch( hideBackDropStore() );
+            // Manejar errores
+            console.error(error);
+       
+        }
+
+    }
+}
+
+
 
 export const createMany =  (data) => {
 
@@ -397,6 +621,18 @@ export const getDelete = (id = "") => {
             console.error(error);
         }
 
+    }
+
+}
+
+export const product = (data) => {
+    console.log("data ",data);
+}
+
+export const clearContentProduct = () => {
+
+    return async (dispatch, getState) => {
+        await dispatch( setClearData() );
     }
 
 }

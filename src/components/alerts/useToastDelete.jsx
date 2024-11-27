@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import toast from 'react-hot-toast';
 
-const useToastDelete = () => {
+const useToastDelete = (txtMessage = "") => {
   
   const [confirmPromise, setConfirmPromise] = useState(null);
 
@@ -9,7 +9,7 @@ const useToastDelete = () => {
     if (confirmPromise) {
       const ConfirmNotification = () => (
         <div>
-          <p>¿Are you sure you want to delete this element?</p>
+          <p>{ txtMessage == "" ? "¿Are you sure you want to delete this element?" : txtMessage }</p>
           <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '10px' }}>
           <button onClick={() => handleConfirm(true)} style={{ marginRight: '10px', color: 'white', backgroundColor: 'red', border: 'none', padding: '5px 10px' }}>Si</button>
           <button onClick={() => handleConfirm(false)} style={{ color: 'white', backgroundColor: 'grey', border: 'none', padding: '5px 10px' }}>No</button>
