@@ -8,7 +8,7 @@ import DeleteIcon                   from '@mui/icons-material/Delete';
 import { ModalBody }                from '../modal/ModalBody';
 import { SimpleBackdrop }           from '../../components/Backdrop/BackDrop'; 
 import useToastDelete               from '../../components/alerts/useToastDelete';
-import { getCategories, getCategory, getDelete } from '../../store/categoriesStore/categoriesThunks';
+import { clearCategoryData, getCategories, getCategory, getDelete } from '../../store/categoriesStore/categoriesThunks';
 import { openModalShared }          from '../../store/sharedStore/shared';
 import global                       from '../../constants/constants';
 
@@ -79,6 +79,7 @@ export const CategoriesDataTableView = () => {
       
     
       const handleEditClick = async(id) => {
+        await dispatch(clearCategoryData());
         await dispatch(getCategory(id));
         await dispatch(openModalShared());
       };

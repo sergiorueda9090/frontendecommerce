@@ -20,6 +20,7 @@ export const Categories = createSlice({
             "updated_at": "",
             "deleted_at": "",
             "id_categories": "",
+            "imageBanner":[],
             "image"     : "",
             "date_create": "",
             "date_update": "",
@@ -29,30 +30,36 @@ export const Categories = createSlice({
   },
   reducers: {
     setClearCategory:(state, action) => {
-      state.dataCategory.data = {
-        "id"        : "",
-        "id_user"   : "",
-        "name"      : "",
-        "slug"      : "",
-        "description": "",
-        "keywords"  : [],
-        "icon"      : "",
-        "created_at": "",
-        "updated_at": "",
-        "deleted_at": "",
-        "id_categories": "",
-        "image"     : "",
-        "date_create": "",
-        "date_update": "",
-        "date_delete": null
+      state.dataCategory = {
+        "status": true,
+        "message": "",
+        "data": {
+            "id"        : "",
+            "id_user"   : "",
+            "name"      : "",
+            "slug"      : "",
+            "description": "",
+            "keywords"  : [],
+            "icon"      : "",
+            "created_at": "",
+            "updated_at": "",
+            "deleted_at": "",
+            "id_categories": "",
+            "imageBanner":[],
+            "image"     : "",
+            "date_create": "",
+            "date_update": "",
+            "date_delete": null
+        }
       }
     },
     setDataCategories:(state, action) => {
         state.dataCategories = action.payload.dataCategories;
     },
     setDataCategory:(state, action) => {
-        state.dataCategory.data           = action.payload.dataCategory;
-        state.dataCategory.data.keywords  = action.payload.dataCategory.keywords.split(',');
+      state.dataCategory.data             = action.payload.dataCategory;
+      state.dataCategory.data.keywords    = action.payload.dataCategory.keywords.split(',');
+      state.dataCategory.data.imageBanner = action.payload.imageBanner;
     },
     setDataOptions:(state, action) => {
       state.dataOptions = action.payload;

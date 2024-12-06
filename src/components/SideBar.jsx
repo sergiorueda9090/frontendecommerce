@@ -7,6 +7,7 @@ import IconButton from '@mui/material/IconButton';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import LocalShippingIcon from '@mui/icons-material/LocalShipping';
+import WebIcon from '@mui/icons-material/Web';
 import PointOfSaleIcon from '@mui/icons-material/PointOfSale';
 import ListItem from '@mui/material/ListItem';
 import ReceiptIcon from '@mui/icons-material/Receipt';
@@ -96,7 +97,8 @@ const descriptions = {
     Banner: 'Edit homepage banners',
     Ordenes: 'View and manage orders',
     Transactions: 'Track transactions',
-    Messaging:'Express courier service: we collect and deliver your shipments quickly.'
+    Messaging:'Express courier service: we collect and deliver your shipments quickly.',
+    MyPage: 'My Web Page',
 };
 
 const iconColors = {
@@ -111,7 +113,8 @@ const iconColors = {
     Banner: 'pink',
     Ordenes: 'teal',
     Transactions: 'brown',
-    LocalShippingIcon: 'green'
+    LocalShippingIcon: 'green',
+    WebIcon:'black',
 };
 
 export function SideBar({ open, handleDrawerClose, username ="Sergio Rueda" }) {
@@ -132,7 +135,7 @@ export function SideBar({ open, handleDrawerClose, username ="Sergio Rueda" }) {
       <Divider />
    
       <List>
-    {['Users','Payments', 'Categories', 'Subcategories','Brands','Genders', 'Products', 'Sliders', 'Banner', 'Ordenes', 'Transactions', 'Messaging'].map((text) => (
+    {['Users','Payments', 'Categories', 'Subcategories','Brands','Genders', 'Products', 'Sliders', 'Banner', 'Ordenes', 'Transactions', 'Messaging', 'web'].map((text) => (
       <ListItem key={text} disablePadding>
         <ListItemButton component={StyledLink} to={`/${text.toLowerCase()}`}>
           <ListItemIcon>
@@ -149,6 +152,7 @@ export function SideBar({ open, handleDrawerClose, username ="Sergio Rueda" }) {
               {text === 'Ordenes' && <StoreIcon sx={{ color: iconColors.Ordenes }} />}
               {text === 'Transactions' && <ReceiptIcon sx={{ color: iconColors.Transactions }} />}
               {text === 'Messaging' && <LocalShippingIcon sx={{ color: iconColors.LocalShippingIcon }} />}
+              {text === 'web' && <WebIcon sx={{ color: iconColors.WebIcon }} />}
             </Tooltip>
           </ListItemIcon>
           <ListItemText primary={text} />

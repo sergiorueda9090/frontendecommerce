@@ -1,0 +1,90 @@
+.ps-block--promotion-header .ps-block__left h3 {
+    line-height: 1;
+    font-size: 48px;
+    color: #f14705;
+    font-weight: 300;
+}
+
+
+p{
+    font-size: 1.4rem;
+    line-height: 1.6em;
+    color: #666;
+}
+
+.bg--cover {
+background-position: 50% 50% !important;
+background-size: cover !important;
+}
+  
+.bg--top {
+background-position: 50% 50% !important;
+background-size: cover !important;
+}
+
+.ps-block--promotion-header .container {
+    display: -webkit-box;
+    display: flex
+;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    flex-flow: row nowrap;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+    -webkit-box-align: center;
+    align-items: center;
+}
+
+.ps-block--promotion-header .ps-block__left {
+    display: -webkit-box;
+    display: flex
+;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    flex-flow: row nowrap;
+    -webkit-box-align: center;
+    align-items: center;
+}
+
+.ps-block--promotion-header .ps-block__left figure {
+    padding-left: 20px;
+}
+
+figure {
+    margin: 0;
+  }
+
+  
+  .ps-block--promotion-header .ps-block__left h4 {
+    font-weight: 400;
+    font-size: 24px;
+    margin: 0;
+}
+
+.ps-block--promotion-header .container > * {
+    margin-right: 50px;
+}
+
+.ps-block--promotion-header p {
+    margin-bottom: 0;
+}
+
+p {
+    font-size: 1.4rem;
+    line-height: 1.6em;
+    color: #666;
+}
+
+.ps-block--promotion-header .ps-block__center span {
+    display: block;
+    font-weight: 400;
+    font-size: 18px;
+    color: #f14705;
+}
+
+.ps-block--promotion-header .ps-btn {
+    background-color: #f14705;
+    color: #ffffff;
+    font-size: 14px;
+    padding: 8px 20px;
+}

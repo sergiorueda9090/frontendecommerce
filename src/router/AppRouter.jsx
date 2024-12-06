@@ -15,6 +15,7 @@ import { ProductsRoute }            from '../products/routes/ProductsRoute';
 import { OrdersRoute }              from '../ordenes/routes/OrdenesRoute';
 import { TransactionsRoute }        from '../transactions/routes/TransactionsRoute';
 import { AuthRoutes }               from '../auth/routes/AuthRoutes';
+import { WebRoute }                 from '../web/routes/ProductsRoute';
 import { getLoginSuccess }          from '../store/authStore/authThunks';           // Your action to get login success
 
 export const AppRouter = () => {
@@ -44,6 +45,7 @@ export const AppRouter = () => {
             <Route path="/banner"         element={<Banner />} />
             <Route path="/ordenes/*"      element={<OrdersRoute />} />
             <Route path="/transactions/*" element={<TransactionsRoute />} />
+            <Route path="/web/*"          element={<WebRoute />} />
             <Route path="*"               element={<Navigate to="/" />} /> 
           </>
         ) : (

@@ -68,15 +68,16 @@ export const getCategory = (idUser = "") => {
           try {
             // Hacer la solicitud
             const response = await axios.request(options);
-            console.log("response ",response.data.data[0]);
             // Despachar la acción setAuthenticated con la respuesta de la solicitud
 
-            await dispatch(setDataCategory({ dataCategory:  response.data.data[0] }));
+            await dispatch(setDataCategory({ dataCategory:  response.data.data['category'][0],
+                                              imageBanner:   response.data.data['imageBanners']
+             }));
             
             await dispatch( hideBackDropStore() );
 
         } catch (error) {
-            await dispatch( loginFail() );
+            //await dispatch( loginFail() );
             await dispatch( hideBackDropStore() );
             // Manejar errores
             console.error(error);
@@ -170,7 +171,7 @@ export const createCategory =  (categoryData) => {
             
 
         } catch (error) {
-            await dispatch( loginFail() );
+            //await dispatch( loginFail() );
             await dispatch( hideBackDropStore() );
             // Manejar errores
             console.error(error);
@@ -226,6 +227,50 @@ export const getDelete = (idCategory = "") => {
 
 }
 
+export const getDeleteImageBanner = (id = "") => {
+
+    return async (dispatch, getState) => {
+
+        const {auth} = getState();
+
+        const token = auth.token
+
+        await dispatch(showBackDropStore());
+
+        const options = {
+            method: 'DELETE',
+            url: `${ URL}/api/deleteImageBannerCategory/${id}`,
+            headers: {
+              Authorization: `Token ${token}`
+            }
+          };
+
+          try {
+            // Hacer la solicitud
+            const response = await axios.request(options);
+            
+            await dispatch( hideBackDropStore() );
+            
+            // Despachar la acción setAuthenticated con la respuesta de la solicitud
+            if(response.data.status){
+                await dispatch( getCategories() );
+                toast.success('Successfully Delete Imagen banner!');
+            }else{
+                toast.error('This is an error!');;
+            }
+            
+
+        } catch (error) {
+            await dispatch( loginFail() );
+            await dispatch( hideBackDropStore() );
+            // Manejar errores
+            console.error(error);
+        }
+
+    }
+
+}
+
 export const getDataOption = () => {
 
     return async (dispatch, getState) => {
@@ -264,3 +309,10 @@ export const getDataOption = () => {
         }
     };
 };
+
+
+export const clearCategoryData = () => {
+    return async (dispatch, getState) => {
+        await dispatch(setClearCategory());
+    };
+}
