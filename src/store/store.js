@@ -12,6 +12,7 @@ import { Gender }         from './gendersStore/Gender.js';
 import { Orders }         from './ordersStore/Orders.js';
 import { OrdersState }    from './ordersStateStore/OrdersState.js';
 import { Transactions }   from './transactionsStore/transactionsStore.js';
+import { Feature }        from './featureStore/Feature.js';
 
 export const store = configureStore({
   reducer: {
@@ -27,6 +28,7 @@ export const store = configureStore({
     banner       : Banner.reducer,
     orders       : Orders.reducer,
     ordersState  : OrdersState.reducer,
-    transactions : Transactions.reducer
+    transactions : Transactions.reducer,
+    feature      : Feature.reducer
   },
 });

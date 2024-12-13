@@ -1,10 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit'
 
+const savedInfoUser = JSON.parse(localStorage.getItem("infoUser")) || {};
+
 export const Auth = createSlice({
   name: 'auth',
   initialState: {
     infoUser  : {},
-    isLogin   : false,
+    isLogin   : savedInfoUser.islogin === "ok" ? true : false,
     token     : '',
     name_user : '',
     email     : '',
@@ -25,11 +27,11 @@ export const Auth = createSlice({
     },
     setAuthenticated:(state, action) => {
         state.infoUser  = action.payload.infoUser;
-        localStorage.setItem("infoUser",JSON.stringify(action.payload.infoUser));
         state.token     = action.payload.infoUser.token
         state.isLogin   = action.payload.infoUser.islogin === "ok" ? true : false;
         state.name_user = action.payload.infoUser.name_user
         state.email     = action.payload.infoUser.email
+        localStorage.setItem("infoUser",JSON.stringify(action.payload.infoUser));
     }
   }
 })

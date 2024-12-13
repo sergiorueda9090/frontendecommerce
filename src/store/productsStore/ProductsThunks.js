@@ -81,11 +81,6 @@ export const getProduct = (id = "") => {
             let arrayAttributes = response.data.data.valueattributes;
             let imagesArray     = response.data.data.productimages;
             let specifications  = JSON.parse(response.data.data.products[0].specifications);
-
-
-            console.log("product ",product);
-            console.log("arrayAttributes ",arrayAttributes)
-            console.log("imagesArray ",imagesArray)
             
 
             await dispatch(setDataProduct({ product         : product,

@@ -73,6 +73,7 @@ export const DataTableView = () => {
         { field: 'purchase_price',    headerName: 'Purchase Price',   width: 250, editable: true, },
         { field: 'percentage_profit', headerName: 'Percentage Profit',width: 250, editable: true, },
         { field: 'sale_price',        headerName: 'Sale Price',       width: 250, editable: true, },
+        { field: 'originalPrice',     headerName: 'Original Price',   width: 250, editable: true, },
         { field: 'discount',          headerName: 'Discount',         width: 250, editable: true, },
         { field: 'created_at',        headerName: 'Fecha Creacion',   width: 250, editable: true, },
         {

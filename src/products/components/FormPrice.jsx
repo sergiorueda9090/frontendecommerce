@@ -32,13 +32,14 @@ export const FormPrice = () => {
 
         const precioFinal       = precioConGanancia - descuento;
         
+        const originalPrice     = precioConGanancia;
         /*setFormData({
           ...formData,
           ["sale_price"]: precioFinal,
           [name]        :   value,
         });*/
 
-        dispatch(setFormDataProduct({ name, value, sale_price: precioFinal }));
+        dispatch(setFormDataProduct({ name, value, sale_price: precioFinal, originalPrice:originalPrice }));
    
         //dispatch(setFormDataProduct({ name, value }));
 
@@ -162,7 +163,7 @@ export const FormPrice = () => {
                 />
         </Grid>
 
-        <Grid item xs={4}>
+        <Grid item xs={2}>
             <TextField
                 id="sale_price"
                 label="Sale price"
@@ -172,6 +173,23 @@ export const FormPrice = () => {
                 required
                 fullWidth
                 value={dataProduc.data.sale_price}
+                onChange={(e) => handleChangeForm(e)}
+                InputProps={{
+                    readOnly: true,
+                }}
+                />
+        </Grid>
+
+        <Grid item xs={2}>
+            <TextField
+                id="originalPrice"
+                label="originalPrice price"
+                name="originalPrice"
+                type="number"
+                variant="standard"
+                required
+                fullWidth
+                value={dataProduc.data.originalPrice}
                 onChange={(e) => handleChangeForm(e)}
                 InputProps={{
                     readOnly: true,

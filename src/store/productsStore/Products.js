@@ -31,6 +31,7 @@ export const Products = createSlice({
           "details"          : "", 
           "specifications"   : [], 
           "purchase_price"   : "",
+          "originalPrice"    : "",
           "percentage_profit": "",
           "sale_price"       : "",
           "discount"         : "",
@@ -70,6 +71,7 @@ export const Products = createSlice({
         "details"          : "", 
         "specifications"   : [], 
         "purchase_price"   : "",
+        "originalPrice"    : "",
         "percentage_profit": "",
         "sale_price"       : "",
         "discount"         : "",
@@ -113,9 +115,10 @@ export const Products = createSlice({
     },
 
     setFormDataProduct:(state, action) => {
-      const { name, value, sale_price, slug, keywords, id_categories, 
-             name_category, id_category, id_subcategories, name_subcategory, specifications,
-             description,details } = action.payload; // Desestructura el nombre y valor
+      const { name,           value,             sale_price, originalPrice, slug, 
+              keywords,       id_categories,     name_category, 
+              id_category,    id_subcategories,  name_subcategory, 
+              specifications, description,       details } = action.payload; // Desestructura el nombre y valor
 
       if (name) {
         state.dataProduc.data[name] = value;
@@ -123,6 +126,10 @@ export const Products = createSlice({
       
       if (sale_price !== undefined) {
         state.dataProduc.data.sale_price = sale_price; // Actualiza el precio de venta
+      }
+      
+      if (originalPrice !== undefined) {
+         state.dataProduc.data.originalPrice = originalPrice; // Actualiza el precio de venta originalPrice
       }
 
       if (slug !== undefined) {

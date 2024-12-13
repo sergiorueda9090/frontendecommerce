@@ -11,6 +11,7 @@ import WebIcon from '@mui/icons-material/Web';
 import PointOfSaleIcon from '@mui/icons-material/PointOfSale';
 import ListItem from '@mui/material/ListItem';
 import ReceiptIcon from '@mui/icons-material/Receipt';
+import FeaturedPlayListIcon from '@mui/icons-material/FeaturedPlayList';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
@@ -99,6 +100,7 @@ const descriptions = {
     Transactions: 'Track transactions',
     Messaging:'Express courier service: we collect and deliver your shipments quickly.',
     MyPage: 'My Web Page',
+    Feature: 'Feature web page'
 };
 
 const iconColors = {
@@ -115,6 +117,7 @@ const iconColors = {
     Transactions: 'brown',
     LocalShippingIcon: 'green',
     WebIcon:'black',
+    Feature: 'orange',
 };
 
 export function SideBar({ open, handleDrawerClose, username ="Sergio Rueda" }) {
@@ -135,7 +138,7 @@ export function SideBar({ open, handleDrawerClose, username ="Sergio Rueda" }) {
       <Divider />
    
       <List>
-    {['Users','Payments', 'Categories', 'Subcategories','Brands','Genders', 'Products', 'Sliders', 'Banner', 'Ordenes', 'Transactions', 'Messaging', 'web'].map((text) => (
+    {['Users','Payments', 'Categories', 'Subcategories','Brands','Genders', 'Products', 'Sliders', 'Banner', 'Feature', 'Ordenes', 'Transactions', 'Messaging', 'web'].map((text) => (
       <ListItem key={text} disablePadding>
         <ListItemButton component={StyledLink} to={`/${text.toLowerCase()}`}>
           <ListItemIcon>
@@ -149,6 +152,7 @@ export function SideBar({ open, handleDrawerClose, username ="Sergio Rueda" }) {
               {text === 'Products' && <ShoppingCartIcon sx={{ color: iconColors.Products }} />}
               {text === 'Sliders' && <BurstModeIcon sx={{ color: iconColors.Sliders }} />}
               {text === 'Banner' && <ViewCarouselIcon sx={{ color: iconColors.Banner }} />}
+              {text === 'Feature' && <FeaturedPlayListIcon sx={{ color: iconColors.Feature }} />}
               {text === 'Ordenes' && <StoreIcon sx={{ color: iconColors.Ordenes }} />}
               {text === 'Transactions' && <ReceiptIcon sx={{ color: iconColors.Transactions }} />}
               {text === 'Messaging' && <LocalShippingIcon sx={{ color: iconColors.LocalShippingIcon }} />}
