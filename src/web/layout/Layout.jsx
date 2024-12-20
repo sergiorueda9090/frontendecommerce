@@ -27,7 +27,7 @@ export const Layout = ({ children }) => {
       <SideBar open={open} handleDrawerClose={handleDrawerClose} />
       <Box
         component='main'
-        sx={{ flexGrow: 1, p: 3 }}
+        sx={{ flexGrow: 3 }}
       >
         <Toolbar />
         {children}

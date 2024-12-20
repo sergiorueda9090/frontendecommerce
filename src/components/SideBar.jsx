@@ -12,6 +12,12 @@ import PointOfSaleIcon from '@mui/icons-material/PointOfSale';
 import ListItem from '@mui/material/ListItem';
 import ReceiptIcon from '@mui/icons-material/Receipt';
 import FeaturedPlayListIcon from '@mui/icons-material/FeaturedPlayList';
+import EmailIcon from '@mui/icons-material/Email';
+import WhatsAppIcon from '@mui/icons-material/WhatsApp';
+import TelegramIcon from '@mui/icons-material/Telegram';
+import SmsIcon from '@mui/icons-material/Sms';
+import FacebookIcon from '@mui/icons-material/Facebook';
+import InstagramIcon from '@mui/icons-material/Instagram';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
@@ -100,7 +106,13 @@ const descriptions = {
     Transactions: 'Track transactions',
     Messaging:'Express courier service: we collect and deliver your shipments quickly.',
     MyPage: 'My Web Page',
-    Feature: 'Feature web page'
+    Feature: 'Feature web page',
+    Email: 'Email',
+    Whatsapp:'Whatsapp',
+    Telgram: 'Telegram',
+    Sms: 'SMS',
+    Facebook:'Facebook',
+    Instagram: 'Instagram'
 };
 
 const iconColors = {
@@ -118,6 +130,12 @@ const iconColors = {
     LocalShippingIcon: 'green',
     WebIcon:'black',
     Feature: 'orange',
+    Email: 'red',
+    Whatsapp: 'green',
+    Telegram: 'blue',
+    Sms: 'gray',
+    Facebook:'blue',
+    Instagram:'red'
 };
 
 export function SideBar({ open, handleDrawerClose, username ="Sergio Rueda" }) {
@@ -138,7 +156,8 @@ export function SideBar({ open, handleDrawerClose, username ="Sergio Rueda" }) {
       <Divider />
    
       <List>
-    {['Users','Payments', 'Categories', 'Subcategories','Brands','Genders', 'Products', 'Sliders', 'Banner', 'Feature', 'Ordenes', 'Transactions', 'Messaging', 'web'].map((text) => (
+    {['Users','Payments', 'Categories', 'Subcategories','Brands','Genders', 'Products', 'Sliders', 'Banner', 'Feature', 'Ordenes', 
+      'Transactions', 'Messaging', 'web', 'Email', 'Whatsapp', 'Telegram', 'Sms', 'Facebook', 'Instagram'].map((text) => (
       <ListItem key={text} disablePadding>
         <ListItemButton component={StyledLink} to={`/${text.toLowerCase()}`}>
           <ListItemIcon>
@@ -157,6 +176,12 @@ export function SideBar({ open, handleDrawerClose, username ="Sergio Rueda" }) {
               {text === 'Transactions' && <ReceiptIcon sx={{ color: iconColors.Transactions }} />}
               {text === 'Messaging' && <LocalShippingIcon sx={{ color: iconColors.LocalShippingIcon }} />}
               {text === 'web' && <WebIcon sx={{ color: iconColors.WebIcon }} />}
+              {text === 'Email' && <EmailIcon sx={{ color: iconColors.Email }} />}
+              {text === 'Whatsapp' && <WhatsAppIcon sx={{ color: iconColors.Whatsapp }} />}
+              {text === 'Telegram' && <TelegramIcon sx={{ color: iconColors.Telegram }} />}
+              {text === 'Sms' && <SmsIcon sx={{ color: iconColors.Sms }} />}
+              {text === 'Facebook' && <FacebookIcon sx={{ color: iconColors.Facebook }} />}
+              {text === 'Instagram' && <InstagramIcon sx={{ color: iconColors.Instagram }} />}
             </Tooltip>
           </ListItemIcon>
           <ListItemText primary={text} />

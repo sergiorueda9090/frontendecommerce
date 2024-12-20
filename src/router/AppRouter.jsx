@@ -11,13 +11,17 @@ import { Page as Genders }           from '../genders/pages/Page';
 import { Page as Sliders }          from '../sliders/pages/Page';
 import { Page as Banner }           from '../banner/pages/Page';
 import { Page as Feature }          from '../feature/pages/Page';
+import { Page as Email }            from '../email/pages/Page';
+import { Page as Telegram }         from '../telegram/pages/Page';
 
 import { ProductsRoute }            from '../products/routes/ProductsRoute';
 import { OrdersRoute }              from '../ordenes/routes/OrdenesRoute';
 import { TransactionsRoute }        from '../transactions/routes/TransactionsRoute';
 import { AuthRoutes }               from '../auth/routes/AuthRoutes';
 import { WebRoute }                 from '../web/routes/ProductsRoute';
-      
+import { WhatsappRoute }            from '../whatsapp/routes/WhatsappRoute';
+
+//EAAQEy0eZBcrYBO1FJ096N3VJHsl5BZAqCzjwaOWoZCb1ejfTaZBBJrBmic4QqZBrjQsgDMRSX5m7aqtTXYGJCzusZBwZA9MvghMyZCLTepZAM3xRlbCJ4oCy78ZCMJxIxqF1SPhNJnURiDbzn8AxeyqWu9GbiRSDGajH5hu2K07SFdBc7M2nibj1hqigZBCbcLV0Hg75gZDZD
 export const AppRouter = () => {
 
     const { isLogin } = useSelector(state => state.auth);
@@ -39,6 +43,9 @@ export const AppRouter = () => {
             <Route path="/transactions/*" element={<TransactionsRoute />} />
             <Route path="/web/*"          element={<WebRoute />} />
             <Route path="/feature"        element={<Feature />} />
+            <Route path="/Email"          element={<Email />} />
+            <Route path="/Whatsapp/*"       element={<WhatsappRoute />} />
+            <Route path="/Telegram"       element={<Telegram />} />
             <Route path="*"               element={<Navigate to="/" />} /> 
           </>
         ) : (

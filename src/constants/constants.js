@@ -4,8 +4,8 @@ const global = {
     "name_user"     : "",
     "email"         : "",
     "validateToken" : "",
-    //"url"           : "https://pidelibre.com/"
-    "url"         : "http://ecommerce/",
+    "url"           : "https://pidelibre.com/"
+    //"url"         : "http://ecommerce/",
     /*"urlproduction" : "https://ecommerce.sergiodevsolutions.com/"*/
 }
 

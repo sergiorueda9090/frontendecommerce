@@ -5,6 +5,7 @@ import { Provider }       from 'react-redux';
 import {JournalApp}       from './JournalApp';
 import reportWebVitals    from './reportWebVitals';
 import './styles.css';
+import './assets/css/plugins/font-awesome.min.css';
 import { store } from './store/store';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
